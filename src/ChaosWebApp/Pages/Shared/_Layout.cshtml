@@ -9,6 +9,10 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
     <!-- Font Awesome 6 -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Google Fonts — Roboto (Material Design typography) -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <!-- Material Symbols (outlined) -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
     <!-- Custom styles -->
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
@@ -17,7 +21,7 @@
     <!-- ── Navbar ─────────────────────────────────────────────────────────── -->
     <nav class="navbar chaos-navbar sticky-top px-3 px-md-4">
         <a class="navbar-brand text-white d-flex align-items-center gap-2 text-decoration-none" asp-page="/Index">
-            <span class="navbar-logo-icon">⚡</span>
+            <span class="material-symbols-outlined navbar-logo-icon">bolt</span>
             <span class="navbar-brand-text fw-bold">ChaosApp</span>
         </a>
 
@@ -25,9 +29,9 @@
         <div class="ms-auto dropdown">
             <button class="hamburger-btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
                     aria-expanded="false" aria-label="Menu navigation">
-                ☰
+                <span class="material-symbols-outlined">menu</span>
             </button>
-            <ul class="dropdown-menu dropdown-menu-end mt-1 border-0 shadow">
+            <ul class="dropdown-menu dropdown-menu-end mt-1 border-0 shadow-lg">
                 <li>
                     <a class="dropdown-item" asp-page="/Index">
                         <i class="fas fa-store fa-fw me-2 text-primary"></i>Catalogue produits
