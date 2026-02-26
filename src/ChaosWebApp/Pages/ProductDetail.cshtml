@@ -1,0 +1,161 @@
+@page "{id:int}"
+@model ChaosWebApp.Pages.ProductDetailModel
+@{
+    ViewData["Title"] = Model.Product?.Name ?? "Produit introuvable";
+}
+
+@if (Model.Product is null)
+{
+    <div class="text-center py-5">
+        <i class="fas fa-exclamation-triangle fa-3x text-warning mb-3"></i>
+        <h2>Produit introuvable</h2>
+        <p class="text-muted">Ce produit n'existe pas ou a été supprimé.</p>
+        <a asp-page="/Index" class="btn btn-primary"><i class="fas fa-arrow-left me-2"></i>Retour au catalogue</a>
+    </div>
+}
+else
+{
+    var p = Model.Product;
+    var stars = (int)Math.Round(p.Rating);
+    var discount = p.OriginalPrice.HasValue ? (int)Math.Round((1 - p.Price / p.OriginalPrice.Value) * 100) : 0;
+
+    <div class="mb-3">
+        <a asp-page="/Index" class="btn btn-outline-secondary btn-sm">
+            <i class="fas fa-arrow-left me-2"></i>Retour au catalogue
+        </a>
+    </div>
+
+    <div class="row g-4">
+        <!-- Left: Image -->
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm overflow-hidden">
+                <div class="product-detail-img-wrapper p-4">
+                    <img src="@p.ImageUrl" alt="@p.Name" class="img-fluid rounded" style="max-height:320px;object-fit:contain;"
+                         onerror="this.src='https://via.placeholder.com/400x320?text=Image+indisponible'" />
+                </div>
+                <div class="card-body border-top">
+                    <div class="d-flex justify-content-center gap-2 flex-wrap">
+                        @if (p.IsNew)
+                        {
+                            <span class="badge bg-success px-3 py-2"><i class="fas fa-bolt me-1"></i>NOUVEAU</span>
+                        }
+                        @if (p.IsPromotion)
+                        {
+                            <span class="badge bg-danger px-3 py-2 chaos-pulse"><i class="fas fa-tag me-1"></i>PROMO -@discount%</span>
+                        }
+                        @if (p.Stock == 0)
+                        {
+                            <span class="badge bg-secondary px-3 py-2">RUPTURE DE STOCK</span>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right: Details -->
+        <div class="col-md-8">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <!-- Breadcrumb -->
+                    <nav aria-label="breadcrumb" class="mb-2">
+                        <ol class="breadcrumb small">
+                            <li class="breadcrumb-item"><a asp-page="/Index" class="text-decoration-none">Catalogue</a></li>
+                            <li class="breadcrumb-item"><a asp-page="/Index" asp-route-filter="@p.Category" class="text-decoration-none">@p.Category</a></li>
+                            <li class="breadcrumb-item active">@p.SubCategory</li>
+                        </ol>
+                    </nav>
+
+                    <!-- Brand -->
+                    <span class="badge bg-primary bg-opacity-10 text-primary border border-primary-subtle px-3 py-1 mb-2">@p.Brand</span>
+
+                    <!-- Name -->
+                    <h1 class="h3 fw-bold mb-3">@p.Name</h1>
+
+                    <!-- Rating -->
+                    <div class="d-flex align-items-center gap-2 mb-3">
+                        <div class="star-rating">
+                            @for (int i = 1; i <= 5; i++)
+                            {
+                                if (i <= stars)
+                                {
+                                    <i class="fas fa-star text-warning fs-5"></i>
+                                }
+                                else
+                                {
+                                    <i class="far fa-star text-muted fs-5"></i>
+                                }
+                            }
+                        </div>
+                        <span class="fw-semibold">@p.Rating.ToString("F1")</span>
+                        <span class="text-muted small">(@p.ReviewCount.ToString("N0") avis)</span>
+                    </div>
+
+                    <!-- Price -->
+                    <div class="price-block mb-4">
+                        <div class="d-flex align-items-end gap-3">
+                            <span class="fs-1 fw-bold text-primary">@p.Price.ToString("N2") €</span>
+                            @if (p.OriginalPrice.HasValue)
+                            {
+                                <div>
+                                    <span class="fs-5 text-muted text-decoration-line-through">@p.OriginalPrice.Value.ToString("N2") €</span>
+                                    <span class="badge bg-danger ms-1">-@discount%</span>
+                                </div>
+                            }
+                        </div>
+                    </div>
+
+                    <!-- Stock -->
+                    <div class="mb-4">
+                        @if (p.Stock > 10)
+                        {
+                            <span class="text-success fw-semibold"><i class="fas fa-check-circle me-1"></i>En stock (@p.Stock unités disponibles)</span>
+                        }
+                        else if (p.Stock > 0)
+                        {
+                            <span class="text-warning fw-semibold"><i class="fas fa-exclamation-circle me-1"></i>Stock limité — seulement @p.Stock unité(s) restante(s)</span>
+                        }
+                        else
+                        {
+                            <span class="text-danger fw-semibold"><i class="fas fa-times-circle me-1"></i>Rupture de stock</span>
+                        }
+                    </div>
+
+                    <!-- Description -->
+                    <div class="mb-4">
+                        <h5 class="fw-semibold mb-2">Description</h5>
+                        <p class="text-muted lh-lg">@p.Description</p>
+                    </div>
+
+                    <!-- Specs table -->
+                    <div class="border-top pt-3">
+                        <h5 class="fw-semibold mb-3">Informations techniques</h5>
+                        <table class="table table-sm table-borderless">
+                            <tbody>
+                                <tr>
+                                    <td class="text-muted fw-medium" style="width:40%">Référence (EAN)</td>
+                                    <td><code>@p.Ean</code></td>
+                                </tr>
+                                <tr>
+                                    <td class="text-muted fw-medium">Marque</td>
+                                    <td>@p.Brand</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-muted fw-medium">Catégorie</td>
+                                    <td>@p.Category — @p.SubCategory</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-muted fw-medium">Ajouté le</td>
+                                    <td>@p.AddedDate.ToString("dd/MM/yyyy")</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-muted fw-medium">Identifiant</td>
+                                    <td><span class="badge bg-light text-dark border">#@p.Id</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

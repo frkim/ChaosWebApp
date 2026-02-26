@@ -1,0 +1,17 @@
+@page
+@model ChaosWebApp.Pages.ErrorModel
+@{
+    ViewData["Title"] = "Erreur";
+}
+
+<div class="text-center py-5">
+    <i class="fas fa-exclamation-triangle fa-4x text-danger mb-3"></i>
+    <h1 class="display-4">Une erreur s'est produite</h1>
+    @if (Model.ShowRequestId)
+    {
+        <p class="text-muted">Request ID: <code>@Model.RequestId</code></p>
+    }
+    <a asp-page="/Index" class="btn btn-primary mt-3">
+        <i class="fas fa-home me-2"></i>Retour à l'accueil
+    </a>
+</div>

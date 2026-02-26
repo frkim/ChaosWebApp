@@ -1,0 +1,211 @@
+@page
+@model ChaosWebApp.Pages.ChaosConfigModel
+@{
+    ViewData["Title"] = "Simulateur de Chaos";
+}
+
+<div class="d-flex align-items-center gap-3 mb-4">
+    <div class="chaos-icon-bg rounded-3 p-3 text-warning">
+        <i class="fas fa-radiation fa-2x"></i>
+    </div>
+    <div>
+        <h1 class="h2 mb-1">Simulateur de Chaos</h1>
+        <p class="text-muted mb-0">Configurez les pannes et problèmes de performance à injecter dans l'application</p>
+    </div>
+    <!-- Status pill -->
+    @if (Model.Config.IsEnabled)
+    {
+        <span class="badge bg-danger fs-6 px-3 py-2 chaos-pulse ms-auto">
+            <i class="fas fa-radiation me-1"></i>CHAOS ACTIF
+        </span>
+    }
+    else
+    {
+        <span class="badge bg-secondary fs-6 px-3 py-2 ms-auto">
+            <i class="fas fa-power-off me-1"></i>INACTIF
+        </span>
+    }
+</div>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
+        <i class="fas fa-check-circle me-2"></i>@TempData["Success"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<form method="post" asp-page-handler="Save">
+    @Html.AntiForgeryToken()
+
+    <div class="row g-4">
+
+        <!-- Column 1: Global Settings + Chaos Types -->
+        <div class="col-lg-7">
+
+            <!-- Global toggle -->
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-header bg-dark text-white">
+                    <i class="fas fa-toggle-on me-2"></i>Activation globale
+                </div>
+                <div class="card-body">
+                    <div class="form-check form-switch mb-3">
+                        <input class="form-check-input" type="checkbox" id="isEnabled" name="IsEnabled" value="true"
+                               @(Model.Config.IsEnabled ? "checked" : "") role="switch" style="width:3em;height:1.5em" />
+                        <label class="form-check-label fw-semibold ms-2" for="isEnabled">
+                            Activer le simulateur de chaos
+                        </label>
+                    </div>
+
+                    <!-- Target -->
+                    <label class="form-label fw-semibold">Cible</label>
+                    <div class="d-flex gap-3">
+                        @foreach (var target in Enum.GetValues<ChaosWebApp.Models.ChaosTarget>())
+                        {
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="Target" value="@((int)target)" id="target_@target"
+                                       @(Model.Config.Target == target ? "checked" : "") />
+                                <label class="form-check-label" for="target_@target">@target</label>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chaos types -->
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-header bg-dark text-white">
+                    <i class="fas fa-bug me-2"></i>Types de pannes à injecter
+                </div>
+                <div class="card-body">
+                    <div class="row g-3">
+                        @{
+                            void ChaosCheckbox(string id, string label, string icon, string description, bool isChecked)
+                            {
+                                <div class="col-md-6">
+                                    <label class="chaos-type-card border rounded-3 p-3 d-flex align-items-start gap-2 w-100" for="@id">
+                                        <input class="form-check-input mt-0 flex-shrink-0" type="checkbox" id="@id" name="@id" value="true" @(isChecked ? "checked" : "") />
+                                        <div>
+                                            <div class="fw-semibold small"><i class="@icon me-1 text-danger"></i>@label</div>
+                                            <div class="text-muted" style="font-size:.78rem">@description</div>
+                                        </div>
+                                    </label>
+                                </div>
+                            }
+                        }
+                        @{ ChaosCheckbox("EnableHighCpu", "CPU élevé", "fas fa-microchip", "Calcul intensif bloquant le CPU", Model.Config.EnableHighCpu); }
+                        @{ ChaosCheckbox("EnableHighMemory", "Mémoire élevée", "fas fa-memory", "Allocation massive de mémoire RAM", Model.Config.EnableHighMemory); }
+                        @{ ChaosCheckbox("EnableHighLatency", "Latence élevée", "fas fa-clock", "Délai avant de traiter la requête", Model.Config.EnableHighLatency); }
+                        @{ ChaosCheckbox("EnableSlowResponse", "Réponse lente", "fas fa-hourglass-half", "Délai après traitement, avant réponse", Model.Config.EnableSlowResponse); }
+                        @{ ChaosCheckbox("EnableError404", "Erreur 404", "fas fa-search-minus", "Ressource introuvable", Model.Config.EnableError404); }
+                        @{ ChaosCheckbox("EnableError500", "Erreur 500", "fas fa-bomb", "Erreur interne du serveur", Model.Config.EnableError500); }
+                        @{ ChaosCheckbox("EnableError503", "Erreur 503", "fas fa-server", "Service temporairement indisponible", Model.Config.EnableError503); }
+                        @{ ChaosCheckbox("EnableError429", "Erreur 429", "fas fa-ban", "Trop de requêtes (rate limiting)", Model.Config.EnableError429); }
+                        @{ ChaosCheckbox("EnableStackOverflow", "Stack Overflow", "fas fa-infinity", "Simulation de débordement de pile", Model.Config.EnableStackOverflow); }
+                        @{ ChaosCheckbox("EnableRandomErrors", "Erreurs aléatoires", "fas fa-random", "Code HTTP aléatoire parmi 400, 401, 403…", Model.Config.EnableRandomErrors); }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Column 2: Parameters + Frequency -->
+        <div class="col-lg-5">
+
+            <!-- Parameters -->
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-header bg-dark text-white">
+                    <i class="fas fa-sliders-h me-2"></i>Paramètres
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold" for="CpuDurationMs">
+                            <i class="fas fa-microchip text-danger me-1"></i>Durée CPU (ms)
+                        </label>
+                        <input type="number" class="form-control" id="CpuDurationMs" name="CpuDurationMs"
+                               value="@Model.Config.CpuDurationMs" min="100" max="30000" step="100" />
+                        <div class="form-text">Durée du calcul CPU intensif (100–30 000 ms)</div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold" for="MemorySizeMb">
+                            <i class="fas fa-memory text-danger me-1"></i>Taille mémoire (Mo)
+                        </label>
+                        <input type="number" class="form-control" id="MemorySizeMb" name="MemorySizeMb"
+                               value="@Model.Config.MemorySizeMb" min="10" max="2000" step="10" />
+                        <div class="form-text">Quantité de mémoire à allouer (10–2 000 Mo)</div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold" for="LatencyMs">
+                            <i class="fas fa-clock text-danger me-1"></i>Latence (ms)
+                        </label>
+                        <input type="number" class="form-control" id="LatencyMs" name="LatencyMs"
+                               value="@Model.Config.LatencyMs" min="100" max="60000" step="100" />
+                        <div class="form-text">Délai ajouté avant traitement (100–60 000 ms)</div>
+                    </div>
+                    <div class="mb-0">
+                        <label class="form-label small fw-semibold" for="SlowResponseMs">
+                            <i class="fas fa-hourglass-half text-danger me-1"></i>Réponse lente (ms)
+                        </label>
+                        <input type="number" class="form-control" id="SlowResponseMs" name="SlowResponseMs"
+                               value="@Model.Config.SlowResponseMs" min="100" max="60000" step="100" />
+                        <div class="form-text">Délai ajouté après traitement (100–60 000 ms)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Frequency -->
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-header bg-dark text-white">
+                    <i class="fas fa-wave-square me-2"></i>Fréquence d'injection
+                </div>
+                <div class="card-body">
+                    @{
+                        void FrequencyOption(string value, string label, string icon, bool isChecked)
+                        {
+                            <label class="frequency-card border rounded-3 p-3 mb-3 d-flex align-items-center gap-2 w-100" for="freq_@value">
+                                <input class="form-check-input" type="radio" name="FrequencyType" value="@value"
+                                       id="freq_@value" @(isChecked ? "checked" : "") />
+                                <i class="@icon text-primary"></i>
+                                <span class="small fw-semibold">@label</span>
+                            </label>
+                        }
+                    }
+                    @{ FrequencyOption("2", "Pourcentage", "fas fa-percent", Model.Config.FrequencyType == ChaosWebApp.Models.FrequencyType.Percentage); }
+                    <div class="ms-4 mb-3">
+                        <div class="input-group input-group-sm">
+                            <input type="number" class="form-control" name="Percentage" value="@Model.Config.Percentage" min="1" max="100" />
+                            <span class="input-group-text">% des requêtes</span>
+                        </div>
+                    </div>
+
+                    @{ FrequencyOption("0", "Toutes les N requêtes", "fas fa-list-ol", Model.Config.FrequencyType == ChaosWebApp.Models.FrequencyType.EveryNRequests); }
+                    <div class="ms-4 mb-3">
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-text">1 fois toutes les</span>
+                            <input type="number" class="form-control" name="EveryNRequests" value="@Model.Config.EveryNRequests" min="1" max="1000" />
+                            <span class="input-group-text">requêtes</span>
+                        </div>
+                    </div>
+
+                    @{ FrequencyOption("1", "Toutes les N secondes", "fas fa-stopwatch", Model.Config.FrequencyType == ChaosWebApp.Models.FrequencyType.EveryNSeconds); }
+                    <div class="ms-4">
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-text">1 fois toutes les</span>
+                            <input type="number" class="form-control" name="EveryNSeconds" value="@Model.Config.EveryNSeconds" min="1" max="3600" />
+                            <span class="input-group-text">secondes</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Save button -->
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-danger btn-lg">
+                    <i class="fas fa-save me-2"></i>Sauvegarder la configuration
+                </button>
+                <a asp-page="/Index" class="btn btn-outline-secondary">
+                    <i class="fas fa-arrow-left me-2"></i>Retour au catalogue
+                </a>
+            </div>
+        </div>
+    </div>
+</form>
