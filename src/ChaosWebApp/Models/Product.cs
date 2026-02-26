@@ -14,7 +14,6 @@ public class Product
     public double Rating { get; set; }
     public int ReviewCount { get; set; }
     public string Description { get; set; } = string.Empty;
-    public string ImageUrl { get; set; } = string.Empty;
     public string Ean { get; set; } = string.Empty;
     public bool IsNew { get; set; }
     public bool IsPromotion { get; set; }

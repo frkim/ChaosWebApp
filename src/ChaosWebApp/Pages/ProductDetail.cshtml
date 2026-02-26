@@ -26,13 +26,9 @@ else
     </div>
 
     <div class="row g-4">
-        <!-- Left: Image -->
+        <!-- Left: Info badges -->
         <div class="col-md-4">
             <div class="card border-0 shadow-sm overflow-hidden">
-                <div class="product-detail-img-wrapper p-4">
-                    <img src="@p.ImageUrl" alt="@p.Name" class="img-fluid rounded" style="max-height:320px;object-fit:contain;"
-                         onerror="this.src='https://via.placeholder.com/400x320?text=Image+indisponible'" />
-                </div>
                 <div class="card-body border-top">
                     <div class="d-flex justify-content-center gap-2 flex-wrap">
                         @if (p.IsNew)

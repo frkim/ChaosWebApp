@@ -122,7 +122,6 @@ public class ProductService : IProductService
             Price = 1229m, OriginalPrice = 1329m, Stock = 42,
             Rating = 4.8, ReviewCount = 3812,
             Description = "L'iPhone 16 Pro embarque la puce A18 Pro, un écran Super Retina XDR de 6,3 pouces avec ProMotion 120 Hz, un système de triple caméra 48 Mpx avec zoom optique 5x et une autonomie record de 27 heures.",
-            ImageUrl = "https://images.unsplash.com/photo-1695048133142-1a20484429be?w=400&h=400&fit=crop",
             Ean = "0195949082535", IsNew = true, IsPromotion = true, AddedDate = DateTime.UtcNow.AddDays(-5)
         },
         new()
@@ -132,7 +131,6 @@ public class ProductService : IProductService
             Price = 1419m, Stock = 28,
             Rating = 4.7, ReviewCount = 2145,
             Description = "Le Galaxy S25 Ultra intègre le processeur Snapdragon 8 Elite, un écran Dynamic AMOLED 6,9\" 120Hz, un S Pen intégré, une caméra principale 200 Mpx et une batterie de 5000 mAh.",
-            ImageUrl = "https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=400&h=400&fit=crop",
             Ean = "8806095311807", IsNew = true, IsPromotion = false, AddedDate = DateTime.UtcNow.AddDays(-3)
         },
         new()
@@ -142,7 +140,6 @@ public class ProductService : IProductService
             Price = 1099m, OriginalPrice = 1199m, Stock = 15,
             Rating = 4.6, ReviewCount = 987,
             Description = "Le Pixel 9 Pro offre l'IA Google intégrée avec la puce Tensor G4, des mises à jour garanties 7 ans, un écran OLED 6,3\" et la meilleure expérience photographique Android.",
-            ImageUrl = "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=400&h=400&fit=crop",
             Ean = "0840244707218", IsNew = true, IsPromotion = true, AddedDate = DateTime.UtcNow.AddDays(-10)
         },
         new()
@@ -152,7 +149,6 @@ public class ProductService : IProductService
             Price = 829m, OriginalPrice = 969m, Stock = 67,
             Rating = 4.7, ReviewCount = 5234,
             Description = "L'iPhone 15 avec puce A16 Bionic, Dynamic Island, USB-C et une caméra principale 48 Mpx.",
-            ImageUrl = "https://images.unsplash.com/photo-1695048133142-1a20484429be?w=400&h=400&fit=crop",
             Ean = "0195949030345", IsNew = false, IsPromotion = true, AddedDate = DateTime.UtcNow.AddDays(-120)
         },
         // ── Laptops ───────────────────────────────────────────────────────────
@@ -163,7 +159,6 @@ public class ProductService : IProductService
             Price = 2199m, Stock = 12,
             Rating = 4.9, ReviewCount = 1456,
             Description = "MacBook Pro 14 pouces avec puce M3 Pro (11 cœurs CPU, 14 cœurs GPU), 18 Go de mémoire unifiée, SSD 512 Go, écran Liquid Retina XDR, autonomie jusqu'à 18 heures.",
-            ImageUrl = "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400&h=400&fit=crop",
             Ean = "0195949100572", IsNew = false, IsPromotion = false, AddedDate = DateTime.UtcNow.AddDays(-90)
         },
         new()
@@ -173,7 +168,6 @@ public class ProductService : IProductService
             Price = 1599m, OriginalPrice = 1799m, Stock = 8,
             Rating = 4.5, ReviewCount = 678,
             Description = "Dell XPS 15 avec processeur Intel Core i7-13700H, 16 Go DDR5, SSD NVMe 512 Go, écran OLED 3.5K tactile 15,6\" et NVIDIA GeForce RTX 4060.",
-            ImageUrl = "https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=400&h=400&fit=crop",
             Ean = "0884116433476", IsNew = false, IsPromotion = true, AddedDate = DateTime.UtcNow.AddDays(-45)
         },
         new()
@@ -183,7 +177,6 @@ public class ProductService : IProductService
             Price = 2099m, Stock = 5,
             Rating = 4.7, ReviewCount = 342,
             Description = "Ultramobile professionnel avec Intel Core Ultra 7 155U, 32 Go LPDDR5, SSD 1 To, écran IPS 14\" WUXGA et certification MIL-STD-810H.",
-            ImageUrl = "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&h=400&fit=crop",
             Ean = "0196804764139", IsNew = true, IsPromotion = false, AddedDate = DateTime.UtcNow.AddDays(-20)
         },
         new()
@@ -193,7 +186,6 @@ public class ProductService : IProductService
             Price = 2499m, OriginalPrice = 2799m, Stock = 6,
             Rating = 4.8, ReviewCount = 523,
             Description = "PC portable gaming premium avec AMD Ryzen AI 9 HX 370, 32 Go DDR5, SSD 2 To, NVIDIA RTX 4080 12 Go et écran ROG Nebula 16\" QHD+ 240 Hz.",
-            ImageUrl = "https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=400&h=400&fit=crop",
             Ean = "4711387479254", IsNew = true, IsPromotion = true, AddedDate = DateTime.UtcNow.AddDays(-15)
         },
         // ── Tablets ───────────────────────────────────────────────────────────
@@ -204,7 +196,6 @@ public class ProductService : IProductService
             Price = 1299m, Stock = 22,
             Rating = 4.9, ReviewCount = 987,
             Description = "iPad Pro avec puce M4, écran Ultra Retina XDR OLED 13 pouces, design ultra-fin de 5,1 mm et Apple Pencil Pro compatible.",
-            ImageUrl = "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=400&h=400&fit=crop",
             Ean = "0195949128667", IsNew = true, IsPromotion = false, AddedDate = DateTime.UtcNow.AddDays(-8)
         },
         new()
@@ -214,7 +205,6 @@ public class ProductService : IProductService
             Price = 449m, OriginalPrice = 549m, Stock = 34,
             Rating = 4.4, ReviewCount = 1234,
             Description = "Tablette Samsung avec écran TFT LCD 10,9\" FHD+, processeur Exynos 1380, 8 Go RAM, batterie 10 090 mAh et résistance IP68.",
-            ImageUrl = "https://images.unsplash.com/photo-1561154464-82e9adf32764?w=400&h=400&fit=crop",
             Ean = "8806095102931", IsNew = false, IsPromotion = true, AddedDate = DateTime.UtcNow.AddDays(-60)
         },
         // ── Headphones ────────────────────────────────────────────────────────
@@ -225,7 +215,6 @@ public class ProductService : IProductService
             Price = 299m, OriginalPrice = 379m, Stock = 88,
             Rating = 4.8, ReviewCount = 8765,
             Description = "Le WH-1000XM5 est le casque à réduction de bruit leader du secteur. Avec 30 heures d'autonomie, 8 micros et la technologie DSEE Extreme, il offre une qualité sonore exceptionnelle.",
-            ImageUrl = "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=400&fit=crop",
             Ean = "4548736132580", IsNew = false, IsPromotion = true, AddedDate = DateTime.UtcNow.AddDays(-180)
         },
         new()
@@ -235,7 +224,6 @@ public class ProductService : IProductService
             Price = 249m, Stock = 156,
             Rating = 4.7, ReviewCount = 12456,
             Description = "AirPods Pro 2 avec réduction de bruit active, son spatial personnalisé, puce H2 et autonomie de 6 heures (30 heures avec le boîtier).",
-            ImageUrl = "https://images.unsplash.com/photo-1606841837239-c5a1a4a07af7?w=400&h=400&fit=crop",
             Ean = "0194253553915", IsNew = false, IsPromotion = false, AddedDate = DateTime.UtcNow.AddDays(-200)
         },
         new()
@@ -245,7 +233,6 @@ public class ProductService : IProductService
             Price = 279m, OriginalPrice = 329m, Stock = 45,
             Rating = 4.6, ReviewCount = 3421,
             Description = "Le Bose QC45 combine réduction de bruit légendaire, confort exceptionnel et 24 heures d'autonomie pour une expérience d'écoute immersive.",
-            ImageUrl = "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=400&fit=crop",
             Ean = "017817833011", IsNew = false, IsPromotion = true, AddedDate = DateTime.UtcNow.AddDays(-150)
         },
         new()
@@ -255,7 +242,6 @@ public class ProductService : IProductService
             Price = 159m, OriginalPrice = 199m, Stock = 72,
             Rating = 4.6, ReviewCount = 5678,
             Description = "Enceinte portative avec son puissant, étanchéité IP67, PowerBank intégré et autonomie de 20 heures.",
-            ImageUrl = "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400&h=400&fit=crop",
             Ean = "6925281990571", IsNew = false, IsPromotion = true, AddedDate = DateTime.UtcNow.AddDays(-100)
         },
         // ── Smart TVs ─────────────────────────────────────────────────────────
@@ -266,7 +252,6 @@ public class ProductService : IProductService
             Price = 1799m, OriginalPrice = 2299m, Stock = 7,
             Rating = 4.7, ReviewCount = 876,
             Description = "TV Neo QLED 65\" avec processeur Neural Quantum 4K Gen2, HDR 2000 nits, Dolby Atmos et Gaming Hub pour une expérience ultime.",
-            ImageUrl = "https://images.unsplash.com/photo-1593359677879-a4bb92f4833c?w=400&h=400&fit=crop",
             Ean = "8806094975901", IsNew = true, IsPromotion = true, AddedDate = DateTime.UtcNow.AddDays(-25)
         },
         new()
@@ -276,7 +261,6 @@ public class ProductService : IProductService
             Price = 1599m, Stock = 9,
             Rating = 4.8, ReviewCount = 654,
             Description = "TV OLED evo G4 55\" avec processeur α11 AI 4K, MLA (Micro Lens Array), HDR10/Dolby Vision IQ et 4 ports HDMI 2.1.",
-            ImageUrl = "https://images.unsplash.com/photo-1593359677879-a4bb92f4833c?w=400&h=400&fit=crop",
             Ean = "8806087636528", IsNew = true, IsPromotion = false, AddedDate = DateTime.UtcNow.AddDays(-30)
         },
         // ── Cameras ───────────────────────────────────────────────────────────
@@ -287,7 +271,6 @@ public class ProductService : IProductService
             Price = 2699m, Stock = 11,
             Rating = 4.9, ReviewCount = 1234,
             Description = "Appareil photo hybride plein format 33 Mpx avec système AF intelligent, vidéo 4K 60p et double slot SD.",
-            ImageUrl = "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=400&h=400&fit=crop",
             Ean = "4548736127852", IsNew = false, IsPromotion = false, AddedDate = DateTime.UtcNow.AddDays(-200)
         },
         new()
@@ -297,7 +280,6 @@ public class ProductService : IProductService
             Price = 2499m, OriginalPrice = 2799m, Stock = 8,
             Rating = 4.8, ReviewCount = 876,
             Description = "Hybride Canon 24,2 Mpx avec AF Dual Pixel CMOS II, rafale 40 i/s et vidéo 4K HDR oversampled.",
-            ImageUrl = "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=400&h=400&fit=crop",
             Ean = "4549292205367", IsNew = false, IsPromotion = true, AddedDate = DateTime.UtcNow.AddDays(-80)
         },
         // ── Gaming ────────────────────────────────────────────────────────────
@@ -308,7 +290,6 @@ public class ProductService : IProductService
             Price = 449m, Stock = 23,
             Rating = 4.8, ReviewCount = 15678,
             Description = "Console PS5 Slim avec lecteur Blu-ray Ultra HD, SSD NVMe 1 To, DualSense, résolution 8K et Ray Tracing.",
-            ImageUrl = "https://images.unsplash.com/photo-1607853202273-797f1c22a38e?w=400&h=400&fit=crop",
             Ean = "711719577980", IsNew = false, IsPromotion = false, AddedDate = DateTime.UtcNow.AddDays(-90)
         },
         new()
@@ -318,7 +299,6 @@ public class ProductService : IProductService
             Price = 499m, Stock = 18,
             Rating = 4.7, ReviewCount = 8934,
             Description = "Console Xbox Series X avec SSD NVMe 1 To, résolution 8K, taux de rafraîchissement jusqu'à 120 fps et rétrocompatibilité totale.",
-            ImageUrl = "https://images.unsplash.com/photo-1621259182978-fbf93132d53d?w=400&h=400&fit=crop",
             Ean = "0889842640816", IsNew = false, IsPromotion = false, AddedDate = DateTime.UtcNow.AddDays(-120)
         },
         new()
@@ -328,7 +308,6 @@ public class ProductService : IProductService
             Price = 319m, Stock = 45,
             Rating = 4.8, ReviewCount = 22345,
             Description = "Console hybride avec écran OLED 7 pouces, station TV améliorée, 64 Go de stockage interne et mode portable 4,5-9 heures d'autonomie.",
-            ImageUrl = "https://images.unsplash.com/photo-1612036782180-6f0b6cd846fe?w=400&h=400&fit=crop",
             Ean = "0045496453442", IsNew = false, IsPromotion = false, AddedDate = DateTime.UtcNow.AddDays(-300)
         },
         new()
@@ -338,7 +317,6 @@ public class ProductService : IProductService
             Price = 69m, OriginalPrice = 79m, Stock = 123,
             Rating = 4.7, ReviewCount = 34567,
             Description = "Manette DualSense avec retour haptique, gâchettes adaptatives, micro intégré et batterie rechargeable.",
-            ImageUrl = "https://images.unsplash.com/photo-1617096199249-89f1f284cf7b?w=400&h=400&fit=crop",
             Ean = "711719827528", IsNew = false, IsPromotion = true, AddedDate = DateTime.UtcNow.AddDays(-200)
         },
         new()
@@ -348,7 +326,6 @@ public class ProductService : IProductService
             Price = 49m, OriginalPrice = 69m, Stock = 234,
             Rating = 4.9, ReviewCount = 45678,
             Description = "Suite épique de Breath of the Wild. Explorez le royaume d'Hyrule et les îles célestes dans cette aventure ouverte extraordinaire.",
-            ImageUrl = "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=400&h=400&fit=crop",
             Ean = "0045496478384", IsNew = false, IsPromotion = true, AddedDate = DateTime.UtcNow.AddDays(-400)
         },
         // ── Books ─────────────────────────────────────────────────────────────
@@ -359,7 +336,6 @@ public class ProductService : IProductService
             Price = 9.90m, OriginalPrice = 11.50m, Stock = 456,
             Rating = 4.7, ReviewCount = 23456,
             Description = "Premier tome de la trilogie des Trois Corps. Une œuvre de science-fiction chinoise monumentale, Prix Hugo du Meilleur Roman 2015.",
-            ImageUrl = "https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400&h=400&fit=crop",
             Ean = "9782330131067", IsNew = false, IsPromotion = true, AddedDate = DateTime.UtcNow.AddDays(-500)
         },
         new()
@@ -369,7 +345,6 @@ public class ProductService : IProductService
             Price = 42m, Stock = 87,
             Rating = 4.6, ReviewCount = 12345,
             Description = "La référence absolue pour écrire du code propre et maintenable. Indispensable pour tout développeur professionnel.",
-            ImageUrl = "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=400&h=400&fit=crop",
             Ean = "9780132350884", IsNew = false, IsPromotion = false, AddedDate = DateTime.UtcNow.AddDays(-700)
         },
         new()
@@ -379,7 +354,6 @@ public class ProductService : IProductService
             Price = 19.90m, Stock = 234,
             Rating = 4.8, ReviewCount = 34567,
             Description = "Transformez vos habitudes et obtenez des résultats extraordinaires. La méthode révolutionnaire pour progresser 1% chaque jour.",
-            ImageUrl = "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?w=400&h=400&fit=crop",
             Ean = "9782080274960", IsNew = false, IsPromotion = false, AddedDate = DateTime.UtcNow.AddDays(-365)
         },
         // ── Music (CDs) ───────────────────────────────────────────────────────
@@ -390,7 +364,6 @@ public class ProductService : IProductService
             Price = 14.99m, Stock = 123,
             Rating = 4.9, ReviewCount = 8765,
             Description = "L'édition Drumless de l'album légendaire de Daft Punk, revisité pour révéler toutes ses harmonies.",
-            ImageUrl = "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&h=400&fit=crop",
             Ean = "0194398821429", IsNew = false, IsPromotion = false, AddedDate = DateTime.UtcNow.AddDays(-200)
         },
         new()
@@ -400,7 +373,6 @@ public class ProductService : IProductService
             Price = 16.99m, OriginalPrice = 19.99m, Stock = 89,
             Rating = 4.7, ReviewCount = 5678,
             Description = "Troisième album studio de Stromae, une œuvre intime et universelle qui parle de vulnérabilité et de la condition humaine.",
-            ImageUrl = "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&h=400&fit=crop",
             Ean = "5054197239205", IsNew = false, IsPromotion = true, AddedDate = DateTime.UtcNow.AddDays(-300)
         },
         // ── Movies ────────────────────────────────────────────────────────────
@@ -411,7 +383,6 @@ public class ProductService : IProductService
             Price = 24.99m, OriginalPrice = 34.99m, Stock = 167,
             Rating = 4.8, ReviewCount = 12345,
             Description = "Le chef-d'œuvre de Christopher Nolan en 4K Ultra HD avec son Dolby Atmos pour une expérience cinéma chez soi.",
-            ImageUrl = "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=400&h=400&fit=crop",
             Ean = "5053083268190", IsNew = false, IsPromotion = true, AddedDate = DateTime.UtcNow.AddDays(-180)
         },
         new()
@@ -421,7 +392,6 @@ public class ProductService : IProductService
             Price = 19.99m, Stock = 234,
             Rating = 4.7, ReviewCount = 8765,
             Description = "La conclusion épique de l'adaptation de Denis Villeneuve. Paul Atreides mène les Fremen dans leur guerre sainte contre l'Empire.",
-            ImageUrl = "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=400&h=400&fit=crop",
             Ean = "5051895485507", IsNew = false, IsPromotion = false, AddedDate = DateTime.UtcNow.AddDays(-100)
         },
         // ── Smart Home ────────────────────────────────────────────────────────
@@ -432,7 +402,6 @@ public class ProductService : IProductService
             Price = 54.99m, OriginalPrice = 64.99m, Stock = 345,
             Rating = 4.4, ReviewCount = 45678,
             Description = "Enceinte connectée avec Alexa, son amélioré, capteur de température intégré et bague lumineuse multicolore.",
-            ImageUrl = "https://images.unsplash.com/photo-1543512214-318c7553f230?w=400&h=400&fit=crop",
             Ean = "0840080595464", IsNew = false, IsPromotion = true, AddedDate = DateTime.UtcNow.AddDays(-250)
         },
         new()
@@ -442,7 +411,6 @@ public class ProductService : IProductService
             Price = 149m, OriginalPrice = 179m, Stock = 78,
             Rating = 4.5, ReviewCount = 23456,
             Description = "Kit démarrage avec bridge Hue et 3 ampoules couleur E27 pour créer l'ambiance parfaite dans votre salon.",
-            ImageUrl = "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=400&fit=crop",
             Ean = "8718696728987", IsNew = false, IsPromotion = true, AddedDate = DateTime.UtcNow.AddDays(-300)
         },
         // ── Wearables ─────────────────────────────────────────────────────────
@@ -453,7 +421,6 @@ public class ProductService : IProductService
             Price = 449m, Stock = 56,
             Rating = 4.7, ReviewCount = 7890,
             Description = "Apple Watch la plus fine et la plus légère. Détection de l'apnée du sommeil, ECG, SpO2 et jusqu'à 18 heures d'autonomie.",
-            ImageUrl = "https://images.unsplash.com/photo-1434493789847-2f02dc6ca35d?w=400&h=400&fit=crop",
             Ean = "0195949441028", IsNew = true, IsPromotion = false, AddedDate = DateTime.UtcNow.AddDays(-12)
         },
         new()
@@ -463,7 +430,6 @@ public class ProductService : IProductService
             Price = 329m, OriginalPrice = 399m, Stock = 43,
             Rating = 4.5, ReviewCount = 3456,
             Description = "Galaxy Watch 7 avec puce Exynos W1000, analyse avancée du sommeil, BioActive Sensor et autonomie de 40 heures.",
-            ImageUrl = "https://images.unsplash.com/photo-1434493789847-2f02dc6ca35d?w=400&h=400&fit=crop",
             Ean = "8806095449555", IsNew = true, IsPromotion = true, AddedDate = DateTime.UtcNow.AddDays(-30)
         },
         // ── Accessories & Peripherals ─────────────────────────────────────────
@@ -474,7 +440,6 @@ public class ProductService : IProductService
             Price = 99m, OriginalPrice = 119m, Stock = 234,
             Rating = 4.8, ReviewCount = 34567,
             Description = "Souris haut de gamme avec capteur 8000 DPI, molette MagSpeed électromagnétique, ergonomie avancée et 70 jours d'autonomie.",
-            ImageUrl = "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=400&h=400&fit=crop",
             Ean = "097855176189", IsNew = false, IsPromotion = true, AddedDate = DateTime.UtcNow.AddDays(-180)
         },
         new()
@@ -484,7 +449,6 @@ public class ProductService : IProductService
             Price = 89m, OriginalPrice = 109m, Stock = 189,
             Rating = 4.7, ReviewCount = 12345,
             Description = "SSD externe ultra-rapide (1050 Mo/s) résistant aux chocs, à la poussière et à l'eau (IP65) avec chiffrement AES 256 bits.",
-            ImageUrl = "https://images.unsplash.com/photo-1531492746076-161ca9bcad58?w=400&h=400&fit=crop",
             Ean = "8806094374490", IsNew = false, IsPromotion = true, AddedDate = DateTime.UtcNow.AddDays(-90)
         },
         new()
@@ -494,7 +458,6 @@ public class ProductService : IProductService
             Price = 45m, Stock = 567,
             Rating = 4.5, ReviewCount = 23456,
             Description = "Chargeur MagSafe pour iPhone avec puissance de charge optimale de 15W grâce à l'alignement magnétique parfait.",
-            ImageUrl = "https://images.unsplash.com/photo-1591370874773-6702e8f12fd8?w=400&h=400&fit=crop",
             Ean = "0194252049785", IsNew = false, IsPromotion = false, AddedDate = DateTime.UtcNow.AddDays(-400)
         },
         new()
@@ -504,7 +467,6 @@ public class ProductService : IProductService
             Price = 129m, Stock = 78,
             Rating = 4.7, ReviewCount = 5678,
             Description = "Batterie externe haute capacité 24000 mAh avec charge rapide 140W, 3 ports de charge simultanés et affichage LED intelligent.",
-            ImageUrl = "https://images.unsplash.com/photo-1591370874773-6702e8f12fd8?w=400&h=400&fit=crop",
             Ean = "0194644126781", IsNew = false, IsPromotion = false, AddedDate = DateTime.UtcNow.AddDays(-150)
         },
         // ── More Tech ─────────────────────────────────────────────────────────
@@ -515,7 +477,6 @@ public class ProductService : IProductService
             Price = 759m, Stock = 23,
             Rating = 4.8, ReviewCount = 3456,
             Description = "Drone compact moins de 249g, vidéo 4K/60fps HDR, omnidirectional obstacle sensing et autonomie 34 minutes.",
-            ImageUrl = "https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=400&h=400&fit=crop",
             Ean = "6941565967153", IsNew = true, IsPromotion = false, AddedDate = DateTime.UtcNow.AddDays(-60)
         },
         new()
@@ -525,7 +486,6 @@ public class ProductService : IProductService
             Price = 299m, OriginalPrice = 399m, Stock = 56,
             Rating = 4.6, ReviewCount = 8765,
             Description = "Caméra d'action avec stabilisation HyperSmooth 6.0, vidéo 5.3K 60fps, étanche à 10m et batterie améliorée 2 heures.",
-            ImageUrl = "https://images.unsplash.com/photo-1480365501497-199581be0e66?w=400&h=400&fit=crop",
             Ean = "0818279028830", IsNew = false, IsPromotion = true, AddedDate = DateTime.UtcNow.AddDays(-120)
         },
         // ── Office & Peripherals ──────────────────────────────────────────────
@@ -536,7 +496,6 @@ public class ProductService : IProductService
             Price = 349m, OriginalPrice = 429m, Stock = 12,
             Rating = 4.3, ReviewCount = 1234,
             Description = "Multifonctions laser couleur WiFi avec impression recto-verso auto, scanner ADF 50 feuilles et Ethernet.",
-            ImageUrl = "https://images.unsplash.com/photo-1612815154858-60aa4c59eaa6?w=400&h=400&fit=crop",
             Ean = "4977766819084", IsNew = false, IsPromotion = true, AddedDate = DateTime.UtcNow.AddDays(-90)
         },
         new()
@@ -546,7 +505,6 @@ public class ProductService : IProductService
             Price = 449m, OriginalPrice = 599m, Stock = 17,
             Rating = 4.6, ReviewCount = 4567,
             Description = "Écran incurvé 34\" IPS QHD+ (3440x1440) avec HDR10, AMD FreeSync, USB-C 60W et 5ms de temps de réponse.",
-            ImageUrl = "https://images.unsplash.com/photo-1527443224154-c4a573d5f5a9?w=400&h=400&fit=crop",
             Ean = "8806091987990", IsNew = false, IsPromotion = true, AddedDate = DateTime.UtcNow.AddDays(-60)
         },
         // ── More Gaming ───────────────────────────────────────────────────────
@@ -557,7 +515,6 @@ public class ProductService : IProductService
             Price = 39.99m, OriginalPrice = 79.99m, Stock = 345,
             Rating = 4.7, ReviewCount = 56789,
             Description = "Explorez l'univers magique de Poudlard dans les années 1800. Un RPG action-aventure ouvert magique.",
-            ImageUrl = "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=400&h=400&fit=crop",
             Ean = "5051892226684", IsNew = false, IsPromotion = true, AddedDate = DateTime.UtcNow.AddDays(-400)
         },
         new()
@@ -567,7 +524,6 @@ public class ProductService : IProductService
             Price = 149m, OriginalPrice = 199m, Stock = 67,
             Rating = 4.5, ReviewCount = 7890,
             Description = "Casque gaming sans fil avec drivers TriForce Titanium 50mm, SmartSwitch et 70 heures d'autonomie.",
-            ImageUrl = "https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?w=400&h=400&fit=crop",
             Ean = "8886419378327", IsNew = false, IsPromotion = true, AddedDate = DateTime.UtcNow.AddDays(-150)
         },
         new()
@@ -577,7 +533,6 @@ public class ProductService : IProductService
             Price = 219m, OriginalPrice = 259m, Stock = 34,
             Rating = 4.7, ReviewCount = 5678,
             Description = "Clavier mécanique haut de gamme avec switches Cherry MX Speed, OPX Axle, molette iCUE et rétroéclairage RGB par touche.",
-            ImageUrl = "https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?w=400&h=400&fit=crop",
             Ean = "0840006616719", IsNew = false, IsPromotion = true, AddedDate = DateTime.UtcNow.AddDays(-200)
         },
         // ── More Books ────────────────────────────────────────────────────────
@@ -588,7 +543,6 @@ public class ProductService : IProductService
             Price = 45m, Stock = 123,
             Rating = 4.8, ReviewCount = 23456,
             Description = "Le guide indispensable du développeur pragmatique. De la théorie à la pratique pour créer des logiciels de qualité.",
-            ImageUrl = "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=400&h=400&fit=crop",
             Ean = "9780135957059", IsNew = false, IsPromotion = false, AddedDate = DateTime.UtcNow.AddDays(-600)
         },
         new()
@@ -598,7 +552,6 @@ public class ProductService : IProductService
             Price = 34.90m, Stock = 78,
             Rating = 4.8, ReviewCount = 12345,
             Description = "L'intégrale du chef-d'œuvre d'Asimov. La saga de l'Empire Galactique et de la Fondation qui œuvre pour préserver la civilisation.",
-            ImageUrl = "https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400&h=400&fit=crop",
             Ean = "9782290388341", IsNew = false, IsPromotion = false, AddedDate = DateTime.UtcNow.AddDays(-800)
         },
         new()
@@ -608,7 +561,6 @@ public class ProductService : IProductService
             Price = 1499m, Stock = 9,
             Rating = 4.5, ReviewCount = 567,
             Description = "Tablette-PC avec Snapdragon X Elite, 16 Go RAM, SSD 512 Go, écran PixelSense Flow 13\" 120Hz et autonomie 14 heures.",
-            ImageUrl = "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=400&h=400&fit=crop",
             Ean = "0889842986716", IsNew = true, IsPromotion = false, AddedDate = DateTime.UtcNow.AddDays(-20)
         },
         new()
@@ -618,7 +570,6 @@ public class ProductService : IProductService
             Price = 699m, OriginalPrice = 799m, Stock = 23,
             Rating = 4.6, ReviewCount = 8765,
             Description = "Aspirateur laser Dyson avec détection laser Fluffy, HEPA filtration, 60 min d'autonomie et écran LCD de performance.",
-            ImageUrl = "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=400&fit=crop",
             Ean = "5025155069622", IsNew = false, IsPromotion = true, AddedDate = DateTime.UtcNow.AddDays(-180)
         },
         new()
@@ -628,7 +579,6 @@ public class ProductService : IProductService
             Price = 169m, OriginalPrice = 229m, Stock = 56,
             Rating = 4.5, ReviewCount = 12345,
             Description = "Machine Nespresso Vertuo avec technologie Centrifusion, reconnaissance de capsule par code-barres et mousseur lait Aeroccino 3.",
-            ImageUrl = "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=400&h=400&fit=crop",
             Ean = "7630047641157", IsNew = false, IsPromotion = true, AddedDate = DateTime.UtcNow.AddDays(-250)
         }
     ];
@@ -663,7 +613,6 @@ public class ProductService : IProductService
             Rating = Math.Round(rng.NextDouble() * 1.5 + 3.5, 1),
             ReviewCount = rng.Next(10, 50000),
             Description = $"Produit {brand} de haute qualité dans la catégorie {category}. Design moderne et performances exceptionnelles.",
-            ImageUrl = $"https://picsum.photos/seed/{rng.Next(1, 1000)}/400/400",
             Ean = string.Concat(Enumerable.Range(0, 13).Select(_ => rng.Next(0, 10).ToString())), // Mock EAN — not a valid EAN-13 (no check digit)
             IsNew = rng.NextDouble() > 0.8,
             IsPromotion = hasPromo,

@@ -26,8 +26,8 @@ public class IndexModel : PageModel
     public bool Ascending { get; private set; } = true;
     public string Filter { get; private set; } = string.Empty;
 
-    public void OnGet(
-        int page = 1,
+    public IActionResult OnGet(
+        int pageNumber = 1,
         int pageSize = 10,
         string sortBy = "id",
         bool ascending = true,
@@ -39,8 +39,7 @@ public class IndexModel : PageModel
             _productService.AddRandomProducts(addCount.Value);
             _logger.LogInformation("Added {Count} random products", addCount.Value);
             // PRG redirect to preserve sort/filter state
-            RedirectToPage(new { page, pageSize, sortBy, ascending, filter });
-            return;
+            return RedirectToPage(null, new { pageNumber, pageSize, sortBy, ascending, filter });
         }
 
         SortBy = sortBy;
@@ -49,10 +48,12 @@ public class IndexModel : PageModel
         PageSize = pageSize is 10 or 25 or 50 ? pageSize : 10;
         TotalCount = _productService.TotalCount;
 
-        var result = _productService.GetProducts(page, PageSize, SortBy, Ascending, Filter);
+        var result = _productService.GetProducts(pageNumber, PageSize, SortBy, Ascending, Filter);
         Products = result.Items;
         FilteredCount = result.TotalCount;
         CurrentPage = result.Page;
         TotalPages = result.TotalPages;
+
+        return Page();
     }
 }
