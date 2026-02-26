@@ -1,28 +1,28 @@
 @page
 @model ChaosWebApp.Pages.IndexModel
 @{
-    ViewData["Title"] = "Catalogue Produits";
+    ViewData["Title"] = "Product Catalog";
 }
 
 <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
         <h1 class="h2 mb-1">
-            <i class="fas fa-store text-primary me-2"></i>Catalogue Produits
+            <i class="fas fa-store text-primary me-2"></i>Product Catalog
         </h1>
-        <p class="text-muted mb-0">@Model.TotalCount produits au total</p>
+        <p class="text-muted mb-0">@Model.TotalCount products total</p>
     </div>
     <div class="d-flex gap-2 align-items-center">
         <!-- Add Products button -->
         <div class="dropdown">
             <button class="btn btn-success dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fas fa-plus-circle me-1"></i> Ajouter des produits
+                <i class="fas fa-plus-circle me-1"></i> Add Products
             </button>
             <ul class="dropdown-menu dropdown-menu-end shadow">
-                <li><h6 class="dropdown-header">Générer des produits aléatoires</h6></li>
-                <li><a class="dropdown-item" asp-page="/Index" asp-route-addCount="5"><i class="fas fa-plus me-2 text-success"></i>+ 5 produits</a></li>
-                <li><a class="dropdown-item" asp-page="/Index" asp-route-addCount="10"><i class="fas fa-plus me-2 text-success"></i>+ 10 produits</a></li>
-                <li><a class="dropdown-item" asp-page="/Index" asp-route-addCount="100"><i class="fas fa-plus me-2 text-warning"></i>+ 100 produits</a></li>
-                <li><a class="dropdown-item" asp-page="/Index" asp-route-addCount="1000"><i class="fas fa-plus me-2 text-danger"></i>+ 1 000 produits</a></li>
+                <li><h6 class="dropdown-header">Generate random products</h6></li>
+                <li><a class="dropdown-item" asp-page="/Index" asp-route-addCount="5"><i class="fas fa-plus me-2 text-success"></i>+ 5 products</a></li>
+                <li><a class="dropdown-item" asp-page="/Index" asp-route-addCount="10"><i class="fas fa-plus me-2 text-success"></i>+ 10 products</a></li>
+                <li><a class="dropdown-item" asp-page="/Index" asp-route-addCount="100"><i class="fas fa-plus me-2 text-warning"></i>+ 100 products</a></li>
+                <li><a class="dropdown-item" asp-page="/Index" asp-route-addCount="1000"><i class="fas fa-plus me-2 text-danger"></i>+ 1,000 products</a></li>
             </ul>
         </div>
     </div>
@@ -35,11 +35,11 @@
             <div class="col-md-6">
                 <div class="input-group">
                     <span class="input-group-text bg-white border-end-0"><i class="fas fa-search text-muted"></i></span>
-                    <input type="text" name="filter" value="@Model.Filter" class="form-control border-start-0 ps-0" placeholder="Rechercher par nom, marque, catégorie…" />
+                    <input type="text" name="filter" value="@Model.Filter" class="form-control border-start-0 ps-0" placeholder="Search by name, brand, category..." />
                 </div>
             </div>
             <div class="col-auto">
-                <label class="col-form-label me-1 text-muted small">Afficher</label>
+                <label class="col-form-label me-1 text-muted small">Show</label>
             </div>
             <div class="col-auto">
                 <select name="pageSize" class="form-select form-select-sm" onchange="this.form.submit()">
@@ -50,19 +50,19 @@
                 </select>
             </div>
             <div class="col-auto">
-                <label class="col-form-label text-muted small">par page</label>
+                <label class="col-form-label text-muted small">per page</label>
             </div>
             <input type="hidden" name="sortBy" value="@Model.SortBy" />
             <input type="hidden" name="ascending" value="@Model.Ascending.ToString().ToLower()" />
             <input type="hidden" name="page" value="1" />
             <div class="col-auto">
                 <button type="submit" class="btn btn-primary btn-sm">
-                    <i class="fas fa-filter me-1"></i>Filtrer
+                    <i class="fas fa-filter me-1"></i>Filter
                 </button>
                 @if (!string.IsNullOrEmpty(Model.Filter))
                 {
                     <a asp-page="/Index" asp-route-page="1" asp-route-pageSize="@Model.PageSize" asp-route-sortBy="@Model.SortBy" asp-route-ascending="@Model.Ascending.ToString().ToLower()" class="btn btn-outline-secondary btn-sm ms-1">
-                        <i class="fas fa-times me-1"></i>Effacer
+                        <i class="fas fa-times me-1"></i>Clear
                     </a>
                 }
             </div>
@@ -77,8 +77,8 @@
         {
             <div class="text-center py-5">
                 <i class="fas fa-search fa-3x text-muted mb-3"></i>
-                <p class="text-muted">Aucun produit trouvé pour "<strong>@Model.Filter</strong>"</p>
-                <a asp-page="/Index" class="btn btn-primary">Voir tous les produits</a>
+                <p class="text-muted">No products found for "<strong>@Model.Filter</strong>"</p>
+                <a asp-page="/Index" class="btn btn-primary">View all products</a>
             </div>
         }
         else
@@ -96,11 +96,11 @@
                                     return $"""<a href="?pageNumber=1&pageSize={Model.PageSize}&sortBy={field}&ascending={nextAsc.ToString().ToLower()}&filter={Uri.EscapeDataString(Model.Filter ?? "")}" class="text-decoration-none text-white sort-link {(isActive ? "active" : "")}">{label} {icon}</a>""";
                                 }
                             }
-                            <th>@Html.Raw(SortLink("name", "Nom"))</th>
-                            <th>@Html.Raw(SortLink("brand", "Marque"))</th>
-                            <th>@Html.Raw(SortLink("category", "Catégorie"))</th>
-                            <th class="text-end">@Html.Raw(SortLink("price", "Prix"))</th>
-                            <th>@Html.Raw(SortLink("rating", "Note"))</th>
+                            <th>@Html.Raw(SortLink("name", "Name"))</th>
+                            <th>@Html.Raw(SortLink("brand", "Brand"))</th>
+                            <th>@Html.Raw(SortLink("category", "Category"))</th>
+                            <th class="text-end">@Html.Raw(SortLink("price", "Price"))</th>
+                            <th>@Html.Raw(SortLink("rating", "Rating"))</th>
                             <th class="text-center">@Html.Raw(SortLink("stock", "Stock"))</th>
                             <th class="text-center">Actions</th>
                         </tr>
@@ -115,11 +115,11 @@
                                         <div class="mt-1">
                                             @if (product.IsNew)
                                             {
-                                                <span class="badge bg-success bg-opacity-10 text-success border border-success-subtle me-1" style="font-size:.7rem">NOUVEAU</span>
+                                                <span class="badge bg-success bg-opacity-10 text-success border border-success-subtle me-1" style="font-size:.7rem">NEW</span>
                                             }
                                             @if (product.IsPromotion)
                                             {
-                                                <span class="badge bg-danger bg-opacity-10 text-danger border border-danger-subtle" style="font-size:.7rem">PROMO</span>
+                                                <span class="badge bg-danger bg-opacity-10 text-danger border border-danger-subtle" style="font-size:.7rem">SALE</span>
                                             }
                                         </div>
                                     </div>
@@ -133,10 +133,10 @@
                                     }
                                 </td>
                                 <td class="text-end">
-                                    <div class="fw-bold text-primary">@product.Price.ToString("N2") €</div>
+                                    <div class="fw-bold text-primary">$@product.Price.ToString("N2")</div>
                                     @if (product.OriginalPrice.HasValue)
                                     {
-                                        <div class="text-muted text-decoration-line-through small">@product.OriginalPrice.Value.ToString("N2") €</div>
+                                        <div class="text-muted text-decoration-line-through small">$@product.OriginalPrice.Value.ToString("N2")</div>
                                     }
                                 </td>
                                 <td>
@@ -178,8 +178,8 @@
                                     }
                                 </td>
                                 <td class="text-center">
-                                    <a asp-page="/ProductDetail" asp-route-id="@product.Id" class="btn btn-outline-primary btn-sm" title="Voir le détail">
-                                        <i class="fas fa-eye me-1"></i>Détail
+                                    <a asp-page="/ProductDetail" asp-route-id="@product.Id" class="btn btn-outline-primary btn-sm" title="View details">
+                                        <i class="fas fa-eye me-1"></i>Details
                                     </a>
                                 </td>
                             </tr>
@@ -193,11 +193,11 @@
             {
                 <div class="d-flex justify-content-between align-items-center px-3 py-3 border-top">
                     <small class="text-muted">
-                        Affichage de @(((Model.CurrentPage - 1) * Model.PageSize) + 1)
-                        à @(Math.Min(Model.CurrentPage * Model.PageSize, Model.FilteredCount))
-                        sur @Model.FilteredCount résultats
+                        Showing @(((Model.CurrentPage - 1) * Model.PageSize) + 1)
+                        to @(Math.Min(Model.CurrentPage * Model.PageSize, Model.FilteredCount))
+                        of @Model.FilteredCount results
                     </small>
-                    <nav aria-label="Pagination produits">
+                    <nav aria-label="Product pagination">
                         <ul class="pagination pagination-sm mb-0">
                             <li class="page-item @(Model.CurrentPage == 1 ? "disabled" : "")">
                                 <a class="page-link" asp-page="/Index" asp-route-pageNumber="@(Model.CurrentPage - 1)" asp-route-pageSize="@Model.PageSize" asp-route-sortBy="@Model.SortBy" asp-route-ascending="@Model.Ascending.ToString().ToLower()" asp-route-filter="@Model.Filter">

@@ -75,7 +75,6 @@ public class ChaosService : IChaosService
         if (cfg.EnableError429) types.Add("Error429");
         if (cfg.EnableStackOverflow) types.Add("StackOverflow");
         if (cfg.EnableSlowResponse) types.Add("SlowResponse");
-        if (cfg.EnableRandomErrors) types.Add("RandomErrors");
 
         return types;
     }

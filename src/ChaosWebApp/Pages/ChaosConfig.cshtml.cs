@@ -33,11 +33,13 @@ public class ChaosConfigModel : PageModel
         bool EnableError429,
         bool EnableStackOverflow,
         bool EnableSlowResponse,
-        bool EnableRandomErrors,
+        bool EnableLongStartup,
         int CpuDurationMs,
         int MemorySizeMb,
         int LatencyMs,
         int SlowResponseMs,
+        int StartupDurationMinMs,
+        int StartupDurationMaxMs,
         int FrequencyType,
         int EveryNRequests,
         int EveryNSeconds,
@@ -56,11 +58,13 @@ public class ChaosConfigModel : PageModel
             EnableError429 = EnableError429,
             EnableStackOverflow = EnableStackOverflow,
             EnableSlowResponse = EnableSlowResponse,
-            EnableRandomErrors = EnableRandomErrors,
+            EnableLongStartup = EnableLongStartup,
             CpuDurationMs = Math.Clamp(CpuDurationMs, 100, 30000),
             MemorySizeMb = Math.Clamp(MemorySizeMb, 10, 2000),
             LatencyMs = Math.Clamp(LatencyMs, 100, 60000),
             SlowResponseMs = Math.Clamp(SlowResponseMs, 100, 60000),
+            StartupDurationMinMs = Math.Clamp(StartupDurationMinMs, 1000, 120000),
+            StartupDurationMaxMs = Math.Clamp(StartupDurationMaxMs, 1000, 300000),
             FrequencyType = (Models.FrequencyType)FrequencyType,
             EveryNRequests = Math.Max(1, EveryNRequests),
             EveryNSeconds = Math.Max(1, EveryNSeconds),
@@ -70,8 +74,8 @@ public class ChaosConfigModel : PageModel
         _chaosService.UpdateConfig(config);
 
         TempData["Success"] = IsEnabled
-            ? "Configuration sauvegardée — le chaos est maintenant ACTIF."
-            : "Configuration sauvegardée — le chaos est désactivé.";
+            ? "Configuration saved — chaos is now ACTIVE."
+            : "Configuration saved — chaos is disabled.";
 
         return RedirectToPage();
     }

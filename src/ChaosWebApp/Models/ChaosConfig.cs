@@ -18,13 +18,15 @@ public class ChaosConfig
     public bool EnableError429 { get; set; }
     public bool EnableStackOverflow { get; set; }
     public bool EnableSlowResponse { get; set; }
-    public bool EnableRandomErrors { get; set; }
+    public bool EnableLongStartup { get; set; }
 
     // Parameters
     public int CpuDurationMs { get; set; } = 2000;
     public int MemorySizeMb { get; set; } = 100;
     public int LatencyMs { get; set; } = 3000;
     public int SlowResponseMs { get; set; } = 5000;
+    public int StartupDurationMinMs { get; set; } = 5000;
+    public int StartupDurationMaxMs { get; set; } = 30000;
 
     // Frequency
     public FrequencyType FrequencyType { get; set; } = FrequencyType.Percentage;

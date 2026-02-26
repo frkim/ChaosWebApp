@@ -239,6 +239,116 @@ body {
   border-radius: var(--md-radius) !important;
 }
 
+/* Gauge / volume-style range sliders */
+.gauge-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 8px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #e0e0e0, #bdbdbd);
+  outline: none;
+  cursor: pointer;
+}
+.gauge-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--chaos-red);
+  box-shadow: 0 2px 6px rgba(0,0,0,.25);
+  border: 2px solid #fff;
+  cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+}
+.gauge-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  box-shadow: 0 3px 10px rgba(0,0,0,.3);
+}
+.gauge-slider::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--chaos-red);
+  box-shadow: 0 2px 6px rgba(0,0,0,.25);
+  border: 2px solid #fff;
+  cursor: pointer;
+}
+.gauge-global::-webkit-slider-thumb {
+  background: var(--md-primary);
+}
+.gauge-global::-moz-range-thumb {
+  background: var(--md-primary);
+}
+.gauge-percentage::-webkit-slider-thumb {
+  background: var(--md-primary);
+}
+.gauge-percentage::-moz-range-thumb {
+  background: var(--md-primary);
+}
+
+/* Dual-range slider (startup duration) */
+.dual-range-wrap {
+  position: relative;
+  height: 36px;
+}
+.dual-range-track {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 6px;
+  transform: translateY(-50%);
+  background: #dee2e6;
+  border-radius: 3px;
+  pointer-events: none;
+}
+.dual-range-fill {
+  position: absolute;
+  height: 100%;
+  background: var(--chaos-red);
+  border-radius: 3px;
+}
+.dual-range {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  pointer-events: none;
+}
+.dual-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--chaos-red);
+  border: 2px solid #fff;
+  box-shadow: var(--md-elevation-1);
+  cursor: pointer;
+  pointer-events: auto;
+}
+.dual-range::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--chaos-red);
+  border: 2px solid #fff;
+  box-shadow: var(--md-elevation-1);
+  cursor: pointer;
+  pointer-events: auto;
+}
+.gauge-value-badge {
+  min-width: 60px;
+  text-align: center;
+  font-size: .8rem;
+}
+
 /* Material-style badge */
 .badge {
   font-weight: 500;

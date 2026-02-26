@@ -132,19 +132,6 @@ public class ChaosMiddleware
                 });
                 break;
 
-            case "RandomErrors":
-                var errorCodes = new[] { 400, 401, 403, 404, 408, 409, 422, 429, 500, 502, 503 };
-                var randomCode = errorCodes[Random.Shared.Next(errorCodes.Length)];
-                context.Response.StatusCode = randomCode;
-                await context.Response.WriteAsJsonAsync(new
-                {
-                    error = $"HTTP {randomCode}",
-                    message = $"Chaos Engineering: Random HTTP {randomCode} injected",
-                    path = path,
-                    timestamp = DateTime.UtcNow
-                });
-                break;
-
             default:
                 await _next(context);
                 break;

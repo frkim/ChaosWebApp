@@ -1,16 +1,16 @@
 @page "{id:int}"
 @model ChaosWebApp.Pages.ProductDetailModel
 @{
-    ViewData["Title"] = Model.Product?.Name ?? "Produit introuvable";
+    ViewData["Title"] = Model.Product?.Name ?? "Product Not Found";
 }
 
 @if (Model.Product is null)
 {
     <div class="text-center py-5">
         <i class="fas fa-exclamation-triangle fa-3x text-warning mb-3"></i>
-        <h2>Produit introuvable</h2>
-        <p class="text-muted">Ce produit n'existe pas ou a été supprimé.</p>
-        <a asp-page="/Index" class="btn btn-primary"><i class="fas fa-arrow-left me-2"></i>Retour au catalogue</a>
+        <h2>Product Not Found</h2>
+        <p class="text-muted">This product does not exist or has been removed.</p>
+        <a asp-page="/Index" class="btn btn-primary"><i class="fas fa-arrow-left me-2"></i>Back to Catalog</a>
     </div>
 }
 else
@@ -21,7 +21,7 @@ else
 
     <div class="mb-3">
         <a asp-page="/Index" class="btn btn-outline-secondary btn-sm">
-            <i class="fas fa-arrow-left me-2"></i>Retour au catalogue
+            <i class="fas fa-arrow-left me-2"></i>Back to Catalog
         </a>
     </div>
 
@@ -33,15 +33,15 @@ else
                     <div class="d-flex justify-content-center gap-2 flex-wrap">
                         @if (p.IsNew)
                         {
-                            <span class="badge bg-success px-3 py-2"><i class="fas fa-bolt me-1"></i>NOUVEAU</span>
+                            <span class="badge bg-success px-3 py-2"><i class="fas fa-bolt me-1"></i>NEW</span>
                         }
                         @if (p.IsPromotion)
                         {
-                            <span class="badge bg-danger px-3 py-2 chaos-pulse"><i class="fas fa-tag me-1"></i>PROMO -@discount%</span>
+                            <span class="badge bg-danger px-3 py-2 chaos-pulse"><i class="fas fa-tag me-1"></i>SALE -@discount%</span>
                         }
                         @if (p.Stock == 0)
                         {
-                            <span class="badge bg-secondary px-3 py-2">RUPTURE DE STOCK</span>
+                            <span class="badge bg-secondary px-3 py-2">OUT OF STOCK</span>
                         }
                     </div>
                 </div>
@@ -55,7 +55,7 @@ else
                     <!-- Breadcrumb -->
                     <nav aria-label="breadcrumb" class="mb-2">
                         <ol class="breadcrumb small">
-                            <li class="breadcrumb-item"><a asp-page="/Index" class="text-decoration-none">Catalogue</a></li>
+                            <li class="breadcrumb-item"><a asp-page="/Index" class="text-decoration-none">Catalog</a></li>
                             <li class="breadcrumb-item"><a asp-page="/Index" asp-route-filter="@p.Category" class="text-decoration-none">@p.Category</a></li>
                             <li class="breadcrumb-item active">@p.SubCategory</li>
                         </ol>
@@ -83,17 +83,17 @@ else
                             }
                         </div>
                         <span class="fw-semibold">@p.Rating.ToString("F1")</span>
-                        <span class="text-muted small">(@p.ReviewCount.ToString("N0") avis)</span>
+                        <span class="text-muted small">(@p.ReviewCount.ToString("N0") reviews)</span>
                     </div>
 
                     <!-- Price -->
                     <div class="price-block mb-4">
                         <div class="d-flex align-items-end gap-3">
-                            <span class="fs-1 fw-bold text-primary">@p.Price.ToString("N2") €</span>
+                            <span class="fs-1 fw-bold text-primary">$@p.Price.ToString("N2")</span>
                             @if (p.OriginalPrice.HasValue)
                             {
                                 <div>
-                                    <span class="fs-5 text-muted text-decoration-line-through">@p.OriginalPrice.Value.ToString("N2") €</span>
+                                    <span class="fs-5 text-muted text-decoration-line-through">$@p.OriginalPrice.Value.ToString("N2")</span>
                                     <span class="badge bg-danger ms-1">-@discount%</span>
                                 </div>
                             }
@@ -104,15 +104,15 @@ else
                     <div class="mb-4">
                         @if (p.Stock > 10)
                         {
-                            <span class="text-success fw-semibold"><i class="fas fa-check-circle me-1"></i>En stock (@p.Stock unités disponibles)</span>
+                            <span class="text-success fw-semibold"><i class="fas fa-check-circle me-1"></i>In stock (@p.Stock units available)</span>
                         }
                         else if (p.Stock > 0)
                         {
-                            <span class="text-warning fw-semibold"><i class="fas fa-exclamation-circle me-1"></i>Stock limité — seulement @p.Stock unité(s) restante(s)</span>
+                            <span class="text-warning fw-semibold"><i class="fas fa-exclamation-circle me-1"></i>Limited stock — only @p.Stock unit(s) remaining</span>
                         }
                         else
                         {
-                            <span class="text-danger fw-semibold"><i class="fas fa-times-circle me-1"></i>Rupture de stock</span>
+                            <span class="text-danger fw-semibold"><i class="fas fa-times-circle me-1"></i>Out of stock</span>
                         }
                     </div>
 
@@ -124,27 +124,27 @@ else
 
                     <!-- Specs table -->
                     <div class="border-top pt-3">
-                        <h5 class="fw-semibold mb-3">Informations techniques</h5>
+                        <h5 class="fw-semibold mb-3">Technical Information</h5>
                         <table class="table table-sm table-borderless">
                             <tbody>
                                 <tr>
-                                    <td class="text-muted fw-medium" style="width:40%">Référence (EAN)</td>
+                                    <td class="text-muted fw-medium" style="width:40%">Reference (EAN)</td>
                                     <td><code>@p.Ean</code></td>
                                 </tr>
                                 <tr>
-                                    <td class="text-muted fw-medium">Marque</td>
+                                    <td class="text-muted fw-medium">Brand</td>
                                     <td>@p.Brand</td>
                                 </tr>
                                 <tr>
-                                    <td class="text-muted fw-medium">Catégorie</td>
+                                    <td class="text-muted fw-medium">Category</td>
                                     <td>@p.Category — @p.SubCategory</td>
                                 </tr>
                                 <tr>
-                                    <td class="text-muted fw-medium">Ajouté le</td>
-                                    <td>@p.AddedDate.ToString("dd/MM/yyyy")</td>
+                                    <td class="text-muted fw-medium">Added on</td>
+                                    <td>@p.AddedDate.ToString("MM/dd/yyyy")</td>
                                 </tr>
                                 <tr>
-                                    <td class="text-muted fw-medium">Identifiant</td>
+                                    <td class="text-muted fw-medium">Identifier</td>
                                     <td><span class="badge bg-light text-dark border">#@p.Id</span></td>
                                 </tr>
                             </tbody>
