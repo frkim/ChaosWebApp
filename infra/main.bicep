@@ -83,6 +83,20 @@ resource appConfigDataReaderAssignment 'Microsoft.Authorization/roleAssignments@
   }
 }
 
+// ── App Configuration Data Owner role (for writes) ───────────────────────────
+var appConfigDataOwnerRoleId = '5ae67dd6-50cb-40e7-96ff-dc2bfa4b606b'
+
+resource appConfigDataOwnerAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid(appConfigResource.id, managedIdentity.id, appConfigDataOwnerRoleId)
+  scope: appConfigResource
+  dependsOn: [ appConfiguration ]
+  properties: {
+    principalId:      managedIdentity.properties.principalId
+    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', appConfigDataOwnerRoleId)
+    principalType:    'ServicePrincipal'
+  }
+}
+
 module appInsights 'modules/appInsights.bicep' = {
   name: 'appInsightsDeploy'
   params: {

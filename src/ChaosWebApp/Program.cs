@@ -1,3 +1,4 @@
+using Azure.Data.AppConfiguration;
 using ChaosWebApp.Middleware;
 using ChaosWebApp.Services;
 using Microsoft.OpenApi.Models;
@@ -6,6 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // ── Configuration: Azure App Configuration or environment variables ───────────
 var appConfigEndpoint = Environment.GetEnvironmentVariable("AZURE_APPCONFIG_ENDPOINT");
+ConfigurationClient? appConfigClient = null;
+
 if (!string.IsNullOrWhiteSpace(appConfigEndpoint))
 {
     try
@@ -16,6 +19,7 @@ if (!string.IsNullOrWhiteSpace(appConfigEndpoint))
         });
         builder.Configuration.AddAzureAppConfiguration(options =>
             options.Connect(new Uri(appConfigEndpoint), credential));
+        appConfigClient = new ConfigurationClient(new Uri(appConfigEndpoint), credential);
     }
     catch (Exception ex)
     {
@@ -63,7 +67,9 @@ builder.Services.AddSwaggerGen(c =>
 
 // ── Application services ──────────────────────────────────────────────────────
 builder.Services.AddSingleton<IProductService, ProductService>();
-builder.Services.AddSingleton<IChaosService,   ChaosService>();
+if (appConfigClient is not null)
+    builder.Services.AddSingleton(appConfigClient);
+builder.Services.AddSingleton<IChaosService, ChaosService>();
 
 // ── Health checks ─────────────────────────────────────────────────────────────
 builder.Services.AddHealthChecks();
