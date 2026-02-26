@@ -8,8 +8,19 @@ var builder = WebApplication.CreateBuilder(args);
 var appConfigEndpoint = Environment.GetEnvironmentVariable("AZURE_APPCONFIG_ENDPOINT");
 if (!string.IsNullOrWhiteSpace(appConfigEndpoint))
 {
-    builder.Configuration.AddAzureAppConfiguration(options =>
-        options.Connect(new Uri(appConfigEndpoint), new Azure.Identity.DefaultAzureCredential()));
+    try
+    {
+        var credential = new Azure.Identity.DefaultAzureCredential(new Azure.Identity.DefaultAzureCredentialOptions
+        {
+            ManagedIdentityClientId = Environment.GetEnvironmentVariable("AZURE_CLIENT_ID")
+        });
+        builder.Configuration.AddAzureAppConfiguration(options =>
+            options.Connect(new Uri(appConfigEndpoint), credential));
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Warning: Could not connect to Azure App Configuration: {ex.Message}");
+    }
 }
 else
 {

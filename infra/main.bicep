@@ -22,6 +22,13 @@ var appConfigName    = '${appName}-cfg-${uniqueSuffix}'
 var containerEnvName = '${appName}-env-${uniqueSuffix}'
 var containerAppName = '${appName}-app-${uniqueSuffix}'
 var loadTestName     = '${appName}-lt-${uniqueSuffix}'
+var identityName     = '${appName}-id-${uniqueSuffix}'
+
+// ── User-assigned managed identity (created before Container App) ─────────────
+resource managedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
+  name:     identityName
+  location: location
+}
 
 // ── Modules ───────────────────────────────────────────────────────────────────
 module logAnalytics 'modules/logAnalytics.bicep' = {
@@ -37,6 +44,42 @@ module acr 'modules/acr.bicep' = {
   params: {
     name:     acrName
     location: location
+  }
+}
+
+// ── AcrPull role assignment (before Container App creation) ───────────────────
+var acrPullRoleId = '7f951dda-4ed3-4680-a7ca-43fe172d538d'
+
+resource acrResource 'Microsoft.ContainerRegistry/registries@2023-07-01' existing = {
+  name: acrName
+}
+
+resource acrPullAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid(acrResource.id, managedIdentity.id, acrPullRoleId)
+  scope: acrResource
+  dependsOn: [ acr ]
+  properties: {
+    principalId:      managedIdentity.properties.principalId
+    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', acrPullRoleId)
+    principalType:    'ServicePrincipal'
+  }
+}
+
+// ── App Configuration Data Reader role ────────────────────────────────────────
+var appConfigDataReaderRoleId = '516239f1-63e1-4d78-a4de-a74fb236a071'
+
+resource appConfigResource 'Microsoft.AppConfiguration/configurationStores@2023-03-01' existing = {
+  name: appConfigName
+}
+
+resource appConfigDataReaderAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid(appConfigResource.id, managedIdentity.id, appConfigDataReaderRoleId)
+  scope: appConfigResource
+  dependsOn: [ appConfiguration ]
+  properties: {
+    principalId:      managedIdentity.properties.principalId
+    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', appConfigDataReaderRoleId)
+    principalType:    'ServicePrincipal'
   }
 }
 
@@ -60,6 +103,7 @@ module appConfiguration 'modules/appConfiguration.bicep' = {
 
 module containerApp 'modules/containerApp.bicep' = {
   name: 'containerAppDeploy'
+  dependsOn: [ acrPullAssignment ]
   params: {
     containerAppName:            containerAppName
     containerEnvName:            containerEnvName
@@ -71,6 +115,8 @@ module containerApp 'modules/containerApp.bicep' = {
     appConfigEndpoint:           appConfiguration.outputs.endpoint
     aspNetCoreEnvironment:       aspNetCoreEnvironment
     acrLoginServer:              acr.outputs.loginServer
+    managedIdentityId:           managedIdentity.id
+    managedIdentityClientId:     managedIdentity.properties.clientId
   }
 }
 

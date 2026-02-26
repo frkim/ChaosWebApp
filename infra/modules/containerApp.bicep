@@ -30,6 +30,12 @@ param aspNetCoreEnvironment string
 @description('ACR login server.')
 param acrLoginServer string
 
+@description('User-assigned managed identity resource ID.')
+param managedIdentityId string
+
+@description('User-assigned managed identity client ID.')
+param managedIdentityClientId string
+
 // ── Container Apps Environment ────────────────────────────────────────────────
 resource containerEnv 'Microsoft.App/managedEnvironments@2024-03-01' = {
   name:     containerEnvName
@@ -49,8 +55,14 @@ resource containerEnv 'Microsoft.App/managedEnvironments@2024-03-01' = {
 resource containerApp 'Microsoft.App/containerApps@2024-03-01' = {
   name:     containerAppName
   location: location
+  tags: {
+    'azd-service-name': 'chaoswebapp'
+  }
   identity: {
-    type: 'SystemAssigned'
+    type: 'UserAssigned'
+    userAssignedIdentities: {
+      '${managedIdentityId}': {}
+    }
   }
   properties: {
     environmentId: containerEnv.id
@@ -70,7 +82,7 @@ resource containerApp 'Microsoft.App/containerApps@2024-03-01' = {
       registries: [
         {
           server:   acrLoginServer
-          identity: 'system'
+          identity: managedIdentityId
         }
       ]
     }
@@ -88,6 +100,7 @@ resource containerApp 'Microsoft.App/containerApps@2024-03-01' = {
             { name: 'ASPNETCORE_URLS',                      value: 'http://+:8080' }
             { name: 'APPLICATIONINSIGHTS_CONNECTION_STRING', secretRef: 'ai-connection-string' }
             { name: 'AZURE_APPCONFIG_ENDPOINT',              value: appConfigEndpoint }
+            { name: 'AZURE_CLIENT_ID',                       value: managedIdentityClientId }
           ]
           probes: [
             {
@@ -135,4 +148,3 @@ resource containerApp 'Microsoft.App/containerApps@2024-03-01' = {
 
 output fqdn        string = 'https://${containerApp.properties.configuration.ingress.fqdn}'
 output resourceId  string = containerApp.id
-output principalId string = containerApp.identity.principalId

@@ -1,0 +1,11 @@
+name: chaoswebapp
+metadata:
+  template: ChaosWebApp
+services:
+  chaoswebapp:
+    project: ./src/ChaosWebApp
+    host: containerapp
+    language: dotnet
+    docker:
+      path: ../../Dockerfile
+      context: ../..
