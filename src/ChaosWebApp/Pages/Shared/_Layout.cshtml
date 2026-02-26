@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] — ChaosApp</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+    <!-- Font Awesome 6 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Custom styles -->
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+    <!-- ── Navbar ─────────────────────────────────────────────────────────── -->
+    <nav class="navbar chaos-navbar sticky-top px-3 px-md-4">
+        <a class="navbar-brand text-white d-flex align-items-center gap-2 text-decoration-none" asp-page="/Index">
+            <span class="navbar-logo-icon">⚡</span>
+            <span class="navbar-brand-text fw-bold">ChaosApp</span>
+        </a>
+
+        <!-- Hamburger dropdown pinned to the RIGHT -->
+        <div class="ms-auto dropdown">
+            <button class="hamburger-btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                    aria-expanded="false" aria-label="Menu navigation">
+                ☰
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end mt-1 border-0 shadow">
+                <li>
+                    <a class="dropdown-item" asp-page="/Index">
+                        <i class="fas fa-store fa-fw me-2 text-primary"></i>Catalogue produits
+                    </a>
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                    <a class="dropdown-item" asp-page="/ChaosConfig">
+                        <i class="fas fa-radiation fa-fw me-2 text-danger"></i>Simulateur de Chaos
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="/swagger" target="_blank" rel="noopener">
+                        <i class="fas fa-code fa-fw me-2 text-success"></i>API Swagger
+                    </a>
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                    <a class="dropdown-item" asp-page="/About">
+                        <i class="fas fa-info-circle fa-fw me-2 text-secondary"></i>À propos
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- ── Main content ───────────────────────────────────────────────────── -->
+    <main class="flex-grow-1 py-4">
+        <div class="container-xl">
+            @RenderBody()
+        </div>
+    </main>
+
+    <!-- ── Footer ─────────────────────────────────────────────────────────── -->
+    <footer class="chaos-footer py-3 mt-auto">
+        <div class="container-xl d-flex justify-content-between align-items-center flex-wrap gap-2">
+            <span class="small">
+                <span class="text-warning fw-bold">⚡ ChaosApp</span>
+                &mdash; Simulateur de résilience &amp; d'observabilité &mdash;
+                <span class="opacity-75">Propulsé par .NET 10 &amp; Azure</span>
+            </span>
+            <div class="d-flex gap-3 small">
+                <a href="/swagger" class="footer-link" target="_blank" rel="noopener"><i class="fas fa-code me-1"></i>API</a>
+                <a asp-page="/ChaosConfig" class="footer-link"><i class="fas fa-radiation me-1"></i>Chaos</a>
+                <a href="/health/live" class="footer-link" target="_blank"><i class="fas fa-heartbeat me-1"></i>Health</a>
+                <a asp-page="/About" class="footer-link"><i class="fas fa-info-circle me-1"></i>About</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc4s9bIOgUxi8T/jzmHRGOUaTfp0jlQUF0fRUkFsB5QV" crossorigin="anonymous"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

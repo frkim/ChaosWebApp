@@ -1,0 +1,197 @@
+/* ============================================================
+   ChaosApp — custom styles
+   ============================================================ */
+
+:root {
+  --chaos-navy:        #0d1b2a;
+  --chaos-navy-light:  #1b2a3b;
+  --chaos-accent:      #f5c518;
+  --chaos-red:         #e63946;
+}
+
+body {
+  background-color: #f4f6fb;
+  color: #1a1a2e;
+}
+
+/* Navbar */
+.chaos-navbar {
+  background: linear-gradient(135deg, var(--chaos-navy) 0%, var(--chaos-navy-light) 100%);
+  border-bottom: 2px solid var(--chaos-accent);
+  min-height: 58px;
+}
+
+.chaos-navbar .navbar-brand-text {
+  font-size: 1.3rem;
+  letter-spacing: .03em;
+}
+
+.chaos-navbar .navbar-logo-icon {
+  font-size: 1.4rem;
+  filter: drop-shadow(0 0 6px var(--chaos-accent));
+}
+
+/* Hamburger button always visible top-right */
+.hamburger-btn {
+  font-size: 1.5rem;
+  line-height: 1;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,.25);
+  border-radius: .375rem;
+  cursor: pointer;
+  transition: opacity .2s, border-color .2s;
+  color: #fff !important;
+  padding: .25rem .55rem;
+}
+.hamburger-btn:hover,
+.hamburger-btn:focus {
+  opacity: .85;
+  border-color: var(--chaos-accent);
+  outline: none;
+  box-shadow: none;
+}
+
+.chaos-navbar .dropdown-menu {
+  border-radius: .6rem;
+  animation: fadeInDown .15s ease;
+  box-shadow: 0 8px 24px rgba(0,0,0,.12);
+}
+.chaos-navbar .dropdown-item {
+  font-size: .9rem;
+  padding: .55rem 1rem;
+  transition: background .15s;
+}
+.chaos-navbar .dropdown-item:hover {
+  background: #eef2ff;
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Footer */
+.chaos-footer {
+  background: var(--chaos-navy);
+  color: rgba(255,255,255,.75);
+  border-top: 2px solid var(--chaos-accent);
+}
+.chaos-footer .footer-link {
+  color: rgba(255,255,255,.6);
+  text-decoration: none;
+  transition: color .2s;
+}
+.chaos-footer .footer-link:hover {
+  color: var(--chaos-accent);
+}
+
+.card {
+  border-radius: .75rem;
+}
+
+/* Product table */
+.product-table {
+  font-size: .9rem;
+}
+.product-table th {
+  font-weight: 600;
+  font-size: .78rem;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  white-space: nowrap;
+  padding: .9rem .75rem;
+}
+.product-table td {
+  vertical-align: middle;
+  padding: .6rem .75rem;
+}
+.product-table tbody tr:hover {
+  background-color: #eef2ff;
+}
+
+.product-thumb {
+  object-fit: contain;
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  padding: 2px;
+}
+
+.sort-link {
+  white-space: nowrap;
+}
+.sort-link.active {
+  color: var(--chaos-accent) !important;
+}
+
+/* Star ratings */
+.star-rating {
+  display: inline-flex;
+  gap: 1px;
+  line-height: 1;
+}
+.star-rating i {
+  font-size: .85rem;
+}
+
+/* Product detail */
+.product-detail-img-wrapper {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  min-height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.price-block {
+  padding: .75rem 1rem;
+  background: #f0f4ff;
+  border-radius: .5rem;
+  display: inline-block;
+}
+
+/* Chaos config */
+.chaos-icon-bg {
+  background: linear-gradient(135deg, #1a1a2e 0%, #2d1b3d 100%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chaos-type-card {
+  background: #fff;
+  transition: border-color .2s, box-shadow .2s, background .2s;
+  cursor: pointer;
+}
+.chaos-type-card:hover {
+  border-color: var(--chaos-red) !important;
+  box-shadow: 0 2px 12px rgba(230,57,70,.1);
+  background: #fff5f6;
+}
+
+.chaos-pulse {
+  animation: pulseBadge 1.8s infinite;
+}
+@keyframes pulseBadge {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(220,53,69,.5); }
+  50%       { box-shadow: 0 0 0 6px rgba(220,53,69,0); }
+}
+
+.frequency-card {
+  cursor: pointer;
+  transition: border-color .2s, background .2s;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #f1f1f1; }
+::-webkit-scrollbar-thumb { background: #c1c8d4; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #9aa3b0; }
+
+@media (max-width: 575.98px) {
+  .product-table th,
+  .product-table td {
+    font-size: .78rem;
+    padding: .45rem .5rem;
+  }
+  h1.h2 { font-size: 1.4rem; }
+}
