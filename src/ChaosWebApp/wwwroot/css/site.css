@@ -1,5 +1,7 @@
 /* ============================================================
-   ChaosApp — custom styles
+   ChaosApp — Material Design inspired styles
+   Uses Roboto font, Material elevation, and Material color
+   system alongside Bootstrap 5 for layout.
    ============================================================ */
 
 :root {
@@ -7,11 +9,25 @@
   --chaos-navy-light:  #1b2a3b;
   --chaos-accent:      #f5c518;
   --chaos-red:         #e63946;
+  --md-surface:        #fafafa;
+  --md-on-surface:     #1c1b1f;
+  --md-primary:        #1565c0;
+  --md-elevation-1:    0 1px 3px rgba(0,0,0,.12), 0 1px 2px rgba(0,0,0,.24);
+  --md-elevation-2:    0 3px 6px rgba(0,0,0,.15), 0 2px 4px rgba(0,0,0,.12);
+  --md-elevation-3:    0 10px 20px rgba(0,0,0,.15), 0 3px 6px rgba(0,0,0,.10);
+  --md-radius:         12px;
 }
 
 body {
-  background-color: #f4f6fb;
-  color: #1a1a2e;
+  font-family: 'Roboto', system-ui, -apple-system, sans-serif;
+  background-color: var(--md-surface);
+  color: var(--md-on-surface);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Material Symbols helper */
+.material-symbols-outlined {
+  vertical-align: middle;
 }
 
 /* Navbar */
@@ -19,6 +35,7 @@ body {
   background: linear-gradient(135deg, var(--chaos-navy) 0%, var(--chaos-navy-light) 100%);
   border-bottom: 2px solid var(--chaos-accent);
   min-height: 58px;
+  box-shadow: var(--md-elevation-2);
 }
 
 .chaos-navbar .navbar-brand-text {
@@ -29,6 +46,7 @@ body {
 .chaos-navbar .navbar-logo-icon {
   font-size: 1.4rem;
   filter: drop-shadow(0 0 6px var(--chaos-accent));
+  color: var(--chaos-accent);
 }
 
 /* Hamburger button always visible top-right */
@@ -42,6 +60,8 @@ body {
   transition: opacity .2s, border-color .2s;
   color: #fff !important;
   padding: .25rem .55rem;
+  display: inline-flex;
+  align-items: center;
 }
 .hamburger-btn:hover,
 .hamburger-btn:focus {
@@ -52,17 +72,19 @@ body {
 }
 
 .chaos-navbar .dropdown-menu {
-  border-radius: .6rem;
+  border-radius: var(--md-radius);
   animation: fadeInDown .15s ease;
-  box-shadow: 0 8px 24px rgba(0,0,0,.12);
+  box-shadow: var(--md-elevation-3);
 }
 .chaos-navbar .dropdown-item {
   font-size: .9rem;
   padding: .55rem 1rem;
+  border-radius: 8px;
+  margin: 2px 6px;
   transition: background .15s;
 }
 .chaos-navbar .dropdown-item:hover {
-  background: #eef2ff;
+  background: #e3f2fd;
 }
 
 @keyframes fadeInDown {
@@ -85,8 +107,37 @@ body {
   color: var(--chaos-accent);
 }
 
+/* Material card styling */
 .card {
-  border-radius: .75rem;
+  border-radius: var(--md-radius);
+  box-shadow: var(--md-elevation-1);
+  transition: box-shadow .2s ease;
+}
+.card:hover {
+  box-shadow: var(--md-elevation-2);
+}
+
+/* Material button overrides */
+.btn {
+  border-radius: 8px;
+  font-weight: 500;
+  letter-spacing: .02em;
+  text-transform: none;
+  transition: box-shadow .2s, background-color .2s;
+}
+.btn:active {
+  box-shadow: var(--md-elevation-1);
+}
+
+/* Material form controls */
+.form-control,
+.form-select {
+  border-radius: 8px;
+}
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--md-primary);
+  box-shadow: 0 0 0 3px rgba(21,101,192,.15);
 }
 
 /* Product table */
@@ -105,8 +156,11 @@ body {
   vertical-align: middle;
   padding: .6rem .75rem;
 }
+.product-table tbody tr {
+  transition: background-color .15s ease;
+}
 .product-table tbody tr:hover {
-  background-color: #eef2ff;
+  background-color: #e3f2fd;
 }
 
 .product-thumb {
@@ -114,6 +168,7 @@ body {
   background: #f8f9fa;
   border: 1px solid #e9ecef;
   padding: 2px;
+  border-radius: 8px;
 }
 
 .sort-link {
@@ -144,8 +199,8 @@ body {
 
 .price-block {
   padding: .75rem 1rem;
-  background: #f0f4ff;
-  border-radius: .5rem;
+  background: #e3f2fd;
+  border-radius: 8px;
   display: inline-block;
 }
 
@@ -155,16 +210,18 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  border-radius: var(--md-radius);
 }
 
 .chaos-type-card {
   background: #fff;
   transition: border-color .2s, box-shadow .2s, background .2s;
   cursor: pointer;
+  border-radius: var(--md-radius) !important;
 }
 .chaos-type-card:hover {
   border-color: var(--chaos-red) !important;
-  box-shadow: 0 2px 12px rgba(230,57,70,.1);
+  box-shadow: var(--md-elevation-2);
   background: #fff5f6;
 }
 
@@ -179,6 +236,13 @@ body {
 .frequency-card {
   cursor: pointer;
   transition: border-color .2s, background .2s;
+  border-radius: var(--md-radius) !important;
+}
+
+/* Material-style badge */
+.badge {
+  font-weight: 500;
+  letter-spacing: .02em;
 }
 
 /* Scrollbar */

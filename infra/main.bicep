@@ -21,6 +21,7 @@ var appInsightsName  = '${appName}-ai-${uniqueSuffix}'
 var appConfigName    = '${appName}-cfg-${uniqueSuffix}'
 var containerEnvName = '${appName}-env-${uniqueSuffix}'
 var containerAppName = '${appName}-app-${uniqueSuffix}'
+var loadTestName     = '${appName}-lt-${uniqueSuffix}'
 
 // ── Modules ───────────────────────────────────────────────────────────────────
 module logAnalytics 'modules/logAnalytics.bicep' = {
@@ -73,8 +74,17 @@ module containerApp 'modules/containerApp.bicep' = {
   }
 }
 
+module loadTesting 'modules/loadTesting.bicep' = {
+  name: 'loadTestingDeploy'
+  params: {
+    name:     loadTestName
+    location: location
+  }
+}
+
 // ── Outputs ───────────────────────────────────────────────────────────────────
 output containerAppUrl            string = containerApp.outputs.fqdn
 output appInsightsConnectionString string = appInsights.outputs.connectionString
 output acrLoginServer             string = acr.outputs.loginServer
 output appConfigEndpoint          string = appConfiguration.outputs.endpoint
+output loadTestResourceId         string = loadTesting.outputs.resourceId

@@ -4,12 +4,20 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ── Optional: Azure App Configuration ────────────────────────────────────────
+// ── Configuration: Azure App Configuration or environment variables ───────────
 var appConfigEndpoint = Environment.GetEnvironmentVariable("AZURE_APPCONFIG_ENDPOINT");
 if (!string.IsNullOrWhiteSpace(appConfigEndpoint))
 {
     builder.Configuration.AddAzureAppConfiguration(options =>
         options.Connect(new Uri(appConfigEndpoint), new Azure.Identity.DefaultAzureCredential()));
+}
+else
+{
+    // Fallback: when Azure App Configuration is not configured, ensure environment
+    // variables (prefixed with "CHAOSAPP_") can override any configuration setting.
+    // Example: CHAOSAPP_ApplicationInsights__ConnectionString overrides
+    //          ApplicationInsights:ConnectionString in appsettings.json.
+    builder.Configuration.AddEnvironmentVariables(prefix: "CHAOSAPP_");
 }
 
 // ── Application Insights ─────────────────────────────────────────────────────
