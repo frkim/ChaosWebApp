@@ -5,7 +5,7 @@ A Web Application and Web API built with **.NET 10** that simulates a product ca
 ## Features
 
 ### Product Catalogue
-- 50+ realistic seed products (inspired by Fnac.com)
+- 50+ realistic seed products
 - Paginated, sortable, and filterable product table
 - Product detail view with star ratings, stock indicators, and pricing
 - On-demand random product generation (+5, +10, +100, +1 000)
