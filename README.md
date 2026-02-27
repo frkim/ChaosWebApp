@@ -19,8 +19,22 @@ A Web Application and Web API built with **.NET 10** that simulates a product ca
 - **HTTP errors** — 404, 500, 503, 429 injection
 - **Stack overflow** — simulated StackOverflowException
 - **Random errors** — random HTTP status codes (400, 401, 403, …)
+- **Fixed value / Random range** — each numeric parameter (CPU duration, memory size, latency, slow response) supports a fixed value or a random range (min/max interval) toggled via radio buttons
 - Frequency control: percentage-based, every N requests, or every N seconds
 - Target scope: Web App only, Web API only, or both
+
+### Protected Pages
+
+The chaos middleware **never** injects faults on these paths, ensuring management and monitoring remain reliable:
+
+| Path | Purpose |
+|------|---------|
+| `/ChaosConfig` | Chaos configuration UI and Save action |
+| `/About` | About page |
+| `/swagger` | Swagger / OpenAPI UI |
+| `/health/live` | Liveness health probe |
+| `/health/ready` | Readiness health probe |
+| `/css`, `/js`, `/lib`, `/favicon` | Static assets |
 
 ## Prerequisites
 
