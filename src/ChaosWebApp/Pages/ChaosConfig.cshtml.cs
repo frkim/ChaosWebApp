@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ChaosWebApp.Pages;
 
+[IgnoreAntiforgeryToken]
 public class ChaosConfigModel : PageModel
 {
     private readonly IChaosService _chaosService;

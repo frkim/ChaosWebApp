@@ -17,8 +17,10 @@ public class ChaosMiddleware
     {
         var path = context.Request.Path.Value ?? string.Empty;
 
-        // Skip chaos for swagger UI, health checks, and static files
-        if (path.StartsWith("/swagger", StringComparison.OrdinalIgnoreCase) ||
+        // Skip chaos for management pages, swagger UI, health checks, and static files
+        if (path.StartsWith("/ChaosConfig", StringComparison.OrdinalIgnoreCase) ||
+            path.StartsWith("/About", StringComparison.OrdinalIgnoreCase) ||
+            path.StartsWith("/swagger", StringComparison.OrdinalIgnoreCase) ||
             path.StartsWith("/health", StringComparison.OrdinalIgnoreCase) ||
             path.StartsWith("/css", StringComparison.OrdinalIgnoreCase) ||
             path.StartsWith("/js", StringComparison.OrdinalIgnoreCase) ||
