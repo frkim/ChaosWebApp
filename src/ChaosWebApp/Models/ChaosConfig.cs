@@ -21,12 +21,23 @@ public class ChaosConfig
     public bool EnableLongStartup { get; set; }
 
     // Parameters
+    public bool UseInterval { get; set; }
     public int CpuDurationMs { get; set; } = 2000;
     public int MemorySizeMb { get; set; } = 100;
     public int LatencyMs { get; set; } = 3000;
     public int SlowResponseMs { get; set; } = 5000;
     public int StartupDurationMinMs { get; set; } = 5000;
     public int StartupDurationMaxMs { get; set; } = 30000;
+
+    // Interval min/max (used when UseInterval = true)
+    public int CpuDurationMinMs { get; set; } = 500;
+    public int CpuDurationMaxMs { get; set; } = 5000;
+    public int MemorySizeMinMb { get; set; } = 50;
+    public int MemorySizeMaxMb { get; set; } = 500;
+    public int LatencyMinMs { get; set; } = 500;
+    public int LatencyMaxMs { get; set; } = 10000;
+    public int SlowResponseMinMs { get; set; } = 500;
+    public int SlowResponseMaxMs { get; set; } = 10000;
 
     // Frequency
     public FrequencyType FrequencyType { get; set; } = FrequencyType.Percentage;

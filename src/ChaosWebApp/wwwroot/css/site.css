@@ -349,6 +349,33 @@ body {
   font-size: .8rem;
 }
 
+/* Primary-colored dual-range (Global Intensity interval) */
+.dual-range-fill-primary {
+  background: var(--md-primary);
+}
+.dual-range-primary::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--md-primary);
+  border: 2px solid #fff;
+  box-shadow: var(--md-elevation-1);
+  cursor: pointer;
+  pointer-events: auto;
+}
+.dual-range-primary::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--md-primary);
+  border: 2px solid #fff;
+  box-shadow: var(--md-elevation-1);
+  cursor: pointer;
+  pointer-events: auto;
+}
+
 /* Material-style badge */
 .badge {
   font-weight: 500;

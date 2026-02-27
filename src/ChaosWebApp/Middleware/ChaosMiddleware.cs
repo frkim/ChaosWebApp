@@ -53,23 +53,35 @@ public class ChaosMiddleware
         switch (chaosType)
         {
             case "HighCpu":
-                await BurnCpuAsync(cfg.CpuDurationMs);
+                var cpuMs = cfg.UseInterval
+                    ? Random.Shared.Next(cfg.CpuDurationMinMs, cfg.CpuDurationMaxMs + 1)
+                    : cfg.CpuDurationMs;
+                await BurnCpuAsync(cpuMs);
                 await _next(context);
                 break;
 
             case "HighMemory":
-                await AllocateMemoryAsync(cfg.MemorySizeMb);
+                var memMb = cfg.UseInterval
+                    ? Random.Shared.Next(cfg.MemorySizeMinMb, cfg.MemorySizeMaxMb + 1)
+                    : cfg.MemorySizeMb;
+                await AllocateMemoryAsync(memMb);
                 await _next(context);
                 break;
 
             case "HighLatency":
-                await Task.Delay(cfg.LatencyMs);
+                var latMs = cfg.UseInterval
+                    ? Random.Shared.Next(cfg.LatencyMinMs, cfg.LatencyMaxMs + 1)
+                    : cfg.LatencyMs;
+                await Task.Delay(latMs);
                 await _next(context);
                 break;
 
             case "SlowResponse":
                 await _next(context);
-                await Task.Delay(cfg.SlowResponseMs);
+                var slowMs = cfg.UseInterval
+                    ? Random.Shared.Next(cfg.SlowResponseMinMs, cfg.SlowResponseMaxMs + 1)
+                    : cfg.SlowResponseMs;
+                await Task.Delay(slowMs);
                 break;
 
             case "Error404":

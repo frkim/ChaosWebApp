@@ -117,117 +117,8 @@
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Column 2: Parameters + Frequency -->
-        <div class="col-lg-5">
-
-            <!-- Parameters -->
-            <div class="card border-0 shadow-sm mb-4">
-                <div class="card-header bg-dark text-white">
-                    <i class="fas fa-sliders-h me-2"></i>Parameters
-                </div>
-                <div class="card-body">
-                    <!-- Global master gauge -->
-                    <div class="mb-4 p-3 border rounded-3 bg-light">
-                        <label class="form-label small fw-semibold" for="globalGauge">
-                            <i class="fas fa-volume-up text-primary me-1"></i>Global Intensity
-                        </label>
-                        <div class="d-flex align-items-center gap-3">
-                            <i class="fas fa-volume-off text-muted"></i>
-                            <input type="range" class="form-range gauge-slider gauge-global flex-grow-1" id="globalGauge"
-                                   min="0" max="100" value="50" />
-                            <i class="fas fa-volume-up text-muted"></i>
-                            <span class="badge bg-primary gauge-value-badge" id="globalGaugeValue">50%</span>
-                        </div>
-                        <div class="form-text">Proportionally adjusts all parameters below</div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label small fw-semibold" for="CpuDurationMs">
-                            <i class="fas fa-microchip text-danger me-1"></i>CPU Duration (ms)
-                        </label>
-                        <div class="d-flex align-items-center gap-3">
-                            <i class="fas fa-volume-off text-muted small"></i>
-                            <input type="range" class="form-range gauge-slider gauge-param flex-grow-1" id="CpuDurationMs_range"
-                                   min="100" max="30000" step="100" value="@Model.Config.CpuDurationMs"
-                                   data-target="CpuDurationMs" data-min="100" data-max="30000" />
-                            <i class="fas fa-volume-up text-muted small"></i>
-                            <span class="badge bg-danger gauge-value-badge" id="CpuDurationMs_val">@Model.Config.CpuDurationMs</span>
-                        </div>
-                        <input type="hidden" id="CpuDurationMs" name="CpuDurationMs" value="@Model.Config.CpuDurationMs" />
-                        <div class="form-text">Intensive CPU computation duration (100–30,000 ms)</div>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label small fw-semibold" for="MemorySizeMb">
-                            <i class="fas fa-memory text-danger me-1"></i>Memory Size (MB)
-                        </label>
-                        <div class="d-flex align-items-center gap-3">
-                            <i class="fas fa-volume-off text-muted small"></i>
-                            <input type="range" class="form-range gauge-slider gauge-param flex-grow-1" id="MemorySizeMb_range"
-                                   min="10" max="2000" step="10" value="@Model.Config.MemorySizeMb"
-                                   data-target="MemorySizeMb" data-min="10" data-max="2000" />
-                            <i class="fas fa-volume-up text-muted small"></i>
-                            <span class="badge bg-danger gauge-value-badge" id="MemorySizeMb_val">@Model.Config.MemorySizeMb</span>
-                        </div>
-                        <input type="hidden" id="MemorySizeMb" name="MemorySizeMb" value="@Model.Config.MemorySizeMb" />
-                        <div class="form-text">Amount of memory to allocate (10–2,000 MB)</div>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label small fw-semibold" for="LatencyMs">
-                            <i class="fas fa-clock text-danger me-1"></i>Latency (ms)
-                        </label>
-                        <div class="d-flex align-items-center gap-3">
-                            <i class="fas fa-volume-off text-muted small"></i>
-                            <input type="range" class="form-range gauge-slider gauge-param flex-grow-1" id="LatencyMs_range"
-                                   min="100" max="60000" step="100" value="@Model.Config.LatencyMs"
-                                   data-target="LatencyMs" data-min="100" data-max="60000" />
-                            <i class="fas fa-volume-up text-muted small"></i>
-                            <span class="badge bg-danger gauge-value-badge" id="LatencyMs_val">@Model.Config.LatencyMs</span>
-                        </div>
-                        <input type="hidden" id="LatencyMs" name="LatencyMs" value="@Model.Config.LatencyMs" />
-                        <div class="form-text">Delay added before processing (100–60,000 ms)</div>
-                    </div>
-                    <div class="mb-0">
-                        <label class="form-label small fw-semibold" for="SlowResponseMs">
-                            <i class="fas fa-hourglass-half text-danger me-1"></i>Slow Response (ms)
-                        </label>
-                        <div class="d-flex align-items-center gap-3">
-                            <i class="fas fa-volume-off text-muted small"></i>
-                            <input type="range" class="form-range gauge-slider gauge-param flex-grow-1" id="SlowResponseMs_range"
-                                   min="100" max="60000" step="100" value="@Model.Config.SlowResponseMs"
-                                   data-target="SlowResponseMs" data-min="100" data-max="60000" />
-                            <i class="fas fa-volume-up text-muted small"></i>
-                            <span class="badge bg-danger gauge-value-badge" id="SlowResponseMs_val">@Model.Config.SlowResponseMs</span>
-                        </div>
-                        <input type="hidden" id="SlowResponseMs" name="SlowResponseMs" value="@Model.Config.SlowResponseMs" />
-                        <div class="form-text">Delay added after processing (100–60,000 ms)</div>
-                    </div>
-                    <div class="mb-0 @(Model.Config.EnableLongStartup ? "" : "d-none")" id="startupDurationSection">
-                        <label class="form-label small fw-semibold">
-                            <i class="fas fa-hourglass-start text-danger me-1"></i>Startup Duration Range (ms)
-                        </label>
-                        <div class="dual-range-wrap">
-                            <div class="dual-range-track">
-                                <div class="dual-range-fill" id="startupFill"></div>
-                            </div>
-                            <input type="range" class="dual-range dual-range-min" id="StartupDurationMinMs_range"
-                                   min="1000" max="300000" step="1000" value="@Model.Config.StartupDurationMinMs" />
-                            <input type="range" class="dual-range dual-range-max" id="StartupDurationMaxMs_range"
-                                   min="1000" max="300000" step="1000" value="@Model.Config.StartupDurationMaxMs" />
-                        </div>
-                        <div class="d-flex justify-content-between mt-1">
-                            <span class="badge bg-danger gauge-value-badge" id="StartupDurationMinMs_val">@Model.Config.StartupDurationMinMs</span>
-                            <span class="badge bg-danger gauge-value-badge" id="StartupDurationMaxMs_val">@Model.Config.StartupDurationMaxMs</span>
-                        </div>
-                        <input type="hidden" id="StartupDurationMinMs" name="StartupDurationMinMs" value="@Model.Config.StartupDurationMinMs" />
-                        <input type="hidden" id="StartupDurationMaxMs" name="StartupDurationMaxMs" value="@Model.Config.StartupDurationMaxMs" />
-                        <div class="form-text">Min–Max startup initialization delay (1,000–300,000 ms)</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Frequency -->
+            <!-- Frequency (moved here, below Fault Types) -->
             <div class="card border-0 shadow-sm mb-4">
                 <div class="card-header bg-dark text-white">
                     <i class="fas fa-wave-square me-2"></i>Injection Frequency
@@ -275,6 +166,259 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <!-- Column 2: Parameters + Save -->
+        <div class="col-lg-5">
+
+            <!-- Parameters -->
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-header bg-dark text-white d-flex align-items-center">
+                    <i class="fas fa-sliders-h me-2"></i>Parameters
+                    <button type="button" class="btn btn-sm btn-outline-light ms-auto" id="restoreDefaults">
+                        <i class="fas fa-undo me-1"></i>Default
+                    </button>
+                </div>
+                <div class="card-body">
+                    <!-- Parameter mode toggle -->
+                    <div class="mb-4 p-3 border rounded-3 bg-light" id="paramModeSection">
+                        <label class="form-label small fw-semibold">
+                            <i class="fas fa-cog text-primary me-1"></i>Parameter Mode
+                        </label>
+                        <div class="d-flex gap-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="UseInterval" value="false" id="modeFixed"
+                                       @(!Model.Config.UseInterval ? "checked" : "") />
+                                <label class="form-check-label fw-semibold" for="modeFixed">
+                                    <i class="fas fa-bullseye me-1"></i>Fixed Value
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="UseInterval" value="true" id="modeInterval"
+                                       @(Model.Config.UseInterval ? "checked" : "") />
+                                <label class="form-check-label fw-semibold" for="modeInterval">
+                                    <i class="fas fa-arrows-alt-h me-1"></i>Random Range
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ═══ Global Intensity — Fixed Value ═══ -->
+                    <div class="mb-4 p-3 border rounded-3 bg-light param-fixed param-global">
+                        <label class="form-label small fw-semibold" for="globalGauge">
+                            <i class="fas fa-volume-up text-primary me-1"></i>Global Intensity
+                        </label>
+                        <div class="d-flex align-items-center gap-3">
+                            <i class="fas fa-volume-off text-muted"></i>
+                            <input type="range" class="form-range gauge-slider gauge-global flex-grow-1" id="globalGauge"
+                                   min="0" max="100" value="50" />
+                            <i class="fas fa-volume-up text-muted"></i>
+                            <span class="badge bg-primary gauge-value-badge" id="globalGaugeValue">50%</span>
+                        </div>
+                        <div class="form-text">Proportionally adjusts all parameters below</div>
+                    </div>
+
+                    <!-- ═══ Global Intensity — Random Range ═══ -->
+                    <div class="mb-4 p-3 border rounded-3 bg-light param-interval param-global">
+                        <label class="form-label small fw-semibold">
+                            <i class="fas fa-volume-up text-primary me-1"></i>Global Intensity
+                        </label>
+                        <div class="dual-range-wrap">
+                            <div class="dual-range-track">
+                                <div class="dual-range-fill dual-range-fill-primary" id="globalIntervalFill"></div>
+                            </div>
+                            <input type="range" class="dual-range dual-range-min dual-range-primary" id="globalGaugeMin"
+                                   min="0" max="100" step="1" value="20" />
+                            <input type="range" class="dual-range dual-range-max dual-range-primary" id="globalGaugeMax"
+                                   min="0" max="100" step="1" value="80" />
+                        </div>
+                        <div class="d-flex justify-content-between mt-1">
+                            <span class="badge bg-primary gauge-value-badge" id="globalGaugeMinValue">20%</span>
+                            <span class="badge bg-primary gauge-value-badge" id="globalGaugeMaxValue">80%</span>
+                        </div>
+                        <div class="form-text">Proportionally adjusts all min–max ranges below</div>
+                    </div>
+
+                    <!-- ═══ CPU Duration — Fixed ═══ -->
+                    <div class="mb-3 param-fixed param-section" data-param-for="EnableHighCpu" @(Model.Config.UseInterval ? "" : "")>
+                        <label class="form-label small fw-semibold">
+                            <i class="fas fa-microchip text-danger me-1"></i>CPU Duration (ms)
+                        </label>
+                        <div class="d-flex align-items-center gap-3">
+                            <i class="fas fa-volume-off text-muted small"></i>
+                            <input type="range" class="form-range gauge-slider gauge-param flex-grow-1" id="CpuDurationMs_range"
+                                   min="100" max="30000" step="100" value="@Model.Config.CpuDurationMs"
+                                   data-target="CpuDurationMs" data-min="100" data-max="30000" />
+                            <i class="fas fa-volume-up text-muted small"></i>
+                            <span class="badge bg-danger gauge-value-badge" id="CpuDurationMs_val">@Model.Config.CpuDurationMs</span>
+                        </div>
+                        <input type="hidden" id="CpuDurationMs" name="CpuDurationMs" value="@Model.Config.CpuDurationMs" />
+                        <div class="form-text">Intensive CPU computation duration (100–30,000 ms)</div>
+                    </div>
+                    <!-- ═══ CPU Duration — Interval ═══ -->
+                    <div class="mb-3 param-interval param-section" data-param-for="EnableHighCpu">
+                        <label class="form-label small fw-semibold">
+                            <i class="fas fa-microchip text-danger me-1"></i>CPU Duration (ms)
+                        </label>
+                        <div class="dual-range-wrap">
+                            <div class="dual-range-track">
+                                <div class="dual-range-fill" id="cpuFill"></div>
+                            </div>
+                            <input type="range" class="dual-range dual-range-min" id="CpuDurationMinMs_range"
+                                   min="100" max="30000" step="100" value="@Model.Config.CpuDurationMinMs" />
+                            <input type="range" class="dual-range dual-range-max" id="CpuDurationMaxMs_range"
+                                   min="100" max="30000" step="100" value="@Model.Config.CpuDurationMaxMs" />
+                        </div>
+                        <div class="d-flex justify-content-between mt-1">
+                            <span class="badge bg-danger gauge-value-badge" id="CpuDurationMinMs_val">@Model.Config.CpuDurationMinMs</span>
+                            <span class="badge bg-danger gauge-value-badge" id="CpuDurationMaxMs_val">@Model.Config.CpuDurationMaxMs</span>
+                        </div>
+                        <input type="hidden" id="CpuDurationMinMs" name="CpuDurationMinMs" value="@Model.Config.CpuDurationMinMs" />
+                        <input type="hidden" id="CpuDurationMaxMs" name="CpuDurationMaxMs" value="@Model.Config.CpuDurationMaxMs" />
+                        <div class="form-text">Min–Max CPU duration (100–30,000 ms)</div>
+                    </div>
+
+                    <!-- ═══ Memory Size — Fixed ═══ -->
+                    <div class="mb-3 param-fixed param-section" data-param-for="EnableHighMemory">
+                        <label class="form-label small fw-semibold">
+                            <i class="fas fa-memory text-danger me-1"></i>Memory Size (MB)
+                        </label>
+                        <div class="d-flex align-items-center gap-3">
+                            <i class="fas fa-volume-off text-muted small"></i>
+                            <input type="range" class="form-range gauge-slider gauge-param flex-grow-1" id="MemorySizeMb_range"
+                                   min="10" max="2000" step="10" value="@Model.Config.MemorySizeMb"
+                                   data-target="MemorySizeMb" data-min="10" data-max="2000" />
+                            <i class="fas fa-volume-up text-muted small"></i>
+                            <span class="badge bg-danger gauge-value-badge" id="MemorySizeMb_val">@Model.Config.MemorySizeMb</span>
+                        </div>
+                        <input type="hidden" id="MemorySizeMb" name="MemorySizeMb" value="@Model.Config.MemorySizeMb" />
+                        <div class="form-text">Amount of memory to allocate (10–2,000 MB)</div>
+                    </div>
+                    <!-- ═══ Memory Size — Interval ═══ -->
+                    <div class="mb-3 param-interval param-section" data-param-for="EnableHighMemory">
+                        <label class="form-label small fw-semibold">
+                            <i class="fas fa-memory text-danger me-1"></i>Memory Size (MB)
+                        </label>
+                        <div class="dual-range-wrap">
+                            <div class="dual-range-track">
+                                <div class="dual-range-fill" id="memFill"></div>
+                            </div>
+                            <input type="range" class="dual-range dual-range-min" id="MemorySizeMinMb_range"
+                                   min="10" max="2000" step="10" value="@Model.Config.MemorySizeMinMb" />
+                            <input type="range" class="dual-range dual-range-max" id="MemorySizeMaxMb_range"
+                                   min="10" max="2000" step="10" value="@Model.Config.MemorySizeMaxMb" />
+                        </div>
+                        <div class="d-flex justify-content-between mt-1">
+                            <span class="badge bg-danger gauge-value-badge" id="MemorySizeMinMb_val">@Model.Config.MemorySizeMinMb</span>
+                            <span class="badge bg-danger gauge-value-badge" id="MemorySizeMaxMb_val">@Model.Config.MemorySizeMaxMb</span>
+                        </div>
+                        <input type="hidden" id="MemorySizeMinMb" name="MemorySizeMinMb" value="@Model.Config.MemorySizeMinMb" />
+                        <input type="hidden" id="MemorySizeMaxMb" name="MemorySizeMaxMb" value="@Model.Config.MemorySizeMaxMb" />
+                        <div class="form-text">Min–Max memory (10–2,000 MB)</div>
+                    </div>
+
+                    <!-- ═══ Latency — Fixed ═══ -->
+                    <div class="mb-3 param-fixed param-section" data-param-for="EnableHighLatency">
+                        <label class="form-label small fw-semibold">
+                            <i class="fas fa-clock text-danger me-1"></i>Latency (ms)
+                        </label>
+                        <div class="d-flex align-items-center gap-3">
+                            <i class="fas fa-volume-off text-muted small"></i>
+                            <input type="range" class="form-range gauge-slider gauge-param flex-grow-1" id="LatencyMs_range"
+                                   min="100" max="60000" step="100" value="@Model.Config.LatencyMs"
+                                   data-target="LatencyMs" data-min="100" data-max="60000" />
+                            <i class="fas fa-volume-up text-muted small"></i>
+                            <span class="badge bg-danger gauge-value-badge" id="LatencyMs_val">@Model.Config.LatencyMs</span>
+                        </div>
+                        <input type="hidden" id="LatencyMs" name="LatencyMs" value="@Model.Config.LatencyMs" />
+                        <div class="form-text">Delay added before processing (100–60,000 ms)</div>
+                    </div>
+                    <!-- ═══ Latency — Interval ═══ -->
+                    <div class="mb-3 param-interval param-section" data-param-for="EnableHighLatency">
+                        <label class="form-label small fw-semibold">
+                            <i class="fas fa-clock text-danger me-1"></i>Latency (ms)
+                        </label>
+                        <div class="dual-range-wrap">
+                            <div class="dual-range-track">
+                                <div class="dual-range-fill" id="latFill"></div>
+                            </div>
+                            <input type="range" class="dual-range dual-range-min" id="LatencyMinMs_range"
+                                   min="100" max="60000" step="100" value="@Model.Config.LatencyMinMs" />
+                            <input type="range" class="dual-range dual-range-max" id="LatencyMaxMs_range"
+                                   min="100" max="60000" step="100" value="@Model.Config.LatencyMaxMs" />
+                        </div>
+                        <div class="d-flex justify-content-between mt-1">
+                            <span class="badge bg-danger gauge-value-badge" id="LatencyMinMs_val">@Model.Config.LatencyMinMs</span>
+                            <span class="badge bg-danger gauge-value-badge" id="LatencyMaxMs_val">@Model.Config.LatencyMaxMs</span>
+                        </div>
+                        <input type="hidden" id="LatencyMinMs" name="LatencyMinMs" value="@Model.Config.LatencyMinMs" />
+                        <input type="hidden" id="LatencyMaxMs" name="LatencyMaxMs" value="@Model.Config.LatencyMaxMs" />
+                        <div class="form-text">Min–Max latency (100–60,000 ms)</div>
+                    </div>
+
+                    <!-- ═══ Slow Response — Fixed ═══ -->
+                    <div class="mb-3 param-fixed param-section" data-param-for="EnableSlowResponse">
+                        <label class="form-label small fw-semibold">
+                            <i class="fas fa-hourglass-half text-danger me-1"></i>Slow Response (ms)
+                        </label>
+                        <div class="d-flex align-items-center gap-3">
+                            <i class="fas fa-volume-off text-muted small"></i>
+                            <input type="range" class="form-range gauge-slider gauge-param flex-grow-1" id="SlowResponseMs_range"
+                                   min="100" max="60000" step="100" value="@Model.Config.SlowResponseMs"
+                                   data-target="SlowResponseMs" data-min="100" data-max="60000" />
+                            <i class="fas fa-volume-up text-muted small"></i>
+                            <span class="badge bg-danger gauge-value-badge" id="SlowResponseMs_val">@Model.Config.SlowResponseMs</span>
+                        </div>
+                        <input type="hidden" id="SlowResponseMs" name="SlowResponseMs" value="@Model.Config.SlowResponseMs" />
+                        <div class="form-text">Delay added after processing (100–60,000 ms)</div>
+                    </div>
+                    <!-- ═══ Slow Response — Interval ═══ -->
+                    <div class="mb-3 param-interval param-section" data-param-for="EnableSlowResponse">
+                        <label class="form-label small fw-semibold">
+                            <i class="fas fa-hourglass-half text-danger me-1"></i>Slow Response (ms)
+                        </label>
+                        <div class="dual-range-wrap">
+                            <div class="dual-range-track">
+                                <div class="dual-range-fill" id="slowFill"></div>
+                            </div>
+                            <input type="range" class="dual-range dual-range-min" id="SlowResponseMinMs_range"
+                                   min="100" max="60000" step="100" value="@Model.Config.SlowResponseMinMs" />
+                            <input type="range" class="dual-range dual-range-max" id="SlowResponseMaxMs_range"
+                                   min="100" max="60000" step="100" value="@Model.Config.SlowResponseMaxMs" />
+                        </div>
+                        <div class="d-flex justify-content-between mt-1">
+                            <span class="badge bg-danger gauge-value-badge" id="SlowResponseMinMs_val">@Model.Config.SlowResponseMinMs</span>
+                            <span class="badge bg-danger gauge-value-badge" id="SlowResponseMaxMs_val">@Model.Config.SlowResponseMaxMs</span>
+                        </div>
+                        <input type="hidden" id="SlowResponseMinMs" name="SlowResponseMinMs" value="@Model.Config.SlowResponseMinMs" />
+                        <input type="hidden" id="SlowResponseMaxMs" name="SlowResponseMaxMs" value="@Model.Config.SlowResponseMaxMs" />
+                        <div class="form-text">Min–Max slow response (100–60,000 ms)</div>
+                    </div>
+
+                    <!-- ═══ Startup Duration (always dual slider) ═══ -->
+                    <div class="mb-0 param-section" data-param-for="EnableLongStartup" id="startupDurationSection">
+                        <label class="form-label small fw-semibold">
+                            <i class="fas fa-hourglass-start text-danger me-1"></i>Startup Duration Range (ms)
+                        </label>
+                        <div class="dual-range-wrap">
+                            <div class="dual-range-track">
+                                <div class="dual-range-fill" id="startupFill"></div>
+                            </div>
+                            <input type="range" class="dual-range dual-range-min" id="StartupDurationMinMs_range"
+                                   min="1000" max="300000" step="1000" value="@Model.Config.StartupDurationMinMs" />
+                            <input type="range" class="dual-range dual-range-max" id="StartupDurationMaxMs_range"
+                                   min="1000" max="300000" step="1000" value="@Model.Config.StartupDurationMaxMs" />
+                        </div>
+                        <div class="d-flex justify-content-between mt-1">
+                            <span class="badge bg-danger gauge-value-badge" id="StartupDurationMinMs_val">@Model.Config.StartupDurationMinMs</span>
+                            <span class="badge bg-danger gauge-value-badge" id="StartupDurationMaxMs_val">@Model.Config.StartupDurationMaxMs</span>
+                        </div>
+                        <input type="hidden" id="StartupDurationMinMs" name="StartupDurationMinMs" value="@Model.Config.StartupDurationMinMs" />
+                        <input type="hidden" id="StartupDurationMaxMs" name="StartupDurationMaxMs" value="@Model.Config.StartupDurationMaxMs" />
+                        <div class="form-text">Min–Max startup initialization delay (1,000–300,000 ms)</div>
+                    </div>
+                </div>
+            </div>
 
             <!-- Save button -->
             <div class="d-grid gap-2">
@@ -292,18 +436,131 @@
 @section Scripts {
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        // Select All / None
+        // ── Select All / None / Random ──
         document.getElementById('selectAll').addEventListener('click', function () {
-            document.querySelectorAll('.chaos-type-card input[type="checkbox"]').forEach(cb => cb.checked = true);
+            document.querySelectorAll('.chaos-type-card input[type="checkbox"]').forEach(cb => { cb.checked = true; });
+            updateParamVisibility();
         });
         document.getElementById('selectNone').addEventListener('click', function () {
-            document.querySelectorAll('.chaos-type-card input[type="checkbox"]').forEach(cb => cb.checked = false);
+            document.querySelectorAll('.chaos-type-card input[type="checkbox"]').forEach(cb => { cb.checked = false; });
+            updateParamVisibility();
         });
         document.getElementById('selectRandom').addEventListener('click', function () {
-            document.querySelectorAll('.chaos-type-card input[type="checkbox"]').forEach(cb => cb.checked = Math.random() < 0.5);
+            document.querySelectorAll('.chaos-type-card input[type="checkbox"]').forEach(cb => { cb.checked = Math.random() < 0.5; });
+            updateParamVisibility();
         });
 
-        // Sync individual parameter range sliders with hidden inputs
+        // ── Parameter visibility based on selected fault types ──
+        var paramSections = document.querySelectorAll('.param-section');
+        var paramGlobalSections = document.querySelectorAll('.param-global');
+        var paramModeSection = document.getElementById('paramModeSection');
+        var paramFixedGlobal = document.querySelectorAll('.param-fixed.param-global');
+        var paramIntervalGlobal = document.querySelectorAll('.param-interval.param-global');
+
+        // Fault types that have associated parameter sliders
+        var paramFaultTypes = ['EnableHighCpu', 'EnableHighMemory', 'EnableHighLatency', 'EnableSlowResponse', 'EnableLongStartup'];
+
+        function hasAnyParamFault() {
+            return paramFaultTypes.some(function (id) {
+                var cb = document.getElementById(id);
+                return cb && cb.checked;
+            });
+        }
+
+        function updateParamVisibility() {
+            var isInterval = document.getElementById('modeInterval').checked;
+            var anyParam = hasAnyParamFault();
+
+            // Show/hide mode toggle + global intensity when at least one param-bearing fault is checked
+            paramModeSection.classList.toggle('d-none', !anyParam);
+            document.querySelectorAll('.param-global.param-fixed').forEach(function (el) {
+                el.classList.toggle('d-none', !anyParam || isInterval);
+            });
+            document.querySelectorAll('.param-global.param-interval').forEach(function (el) {
+                el.classList.toggle('d-none', !anyParam || !isInterval);
+            });
+
+            // Show/hide individual param sections based on their linked fault type checkbox
+            paramSections.forEach(function (section) {
+                var faultId = section.dataset.paramFor;
+                if (!faultId) return;
+                var cb = document.getElementById(faultId);
+                var faultChecked = cb && cb.checked;
+
+                if (faultId === 'EnableLongStartup') {
+                    // Startup Duration is always dual-range (no fixed/interval distinction)
+                    section.classList.toggle('d-none', !faultChecked);
+                } else {
+                    var isFixed = section.classList.contains('param-fixed');
+                    var isIntervalSection = section.classList.contains('param-interval');
+                    if (isFixed) {
+                        section.classList.toggle('d-none', !faultChecked || isInterval);
+                    } else if (isIntervalSection) {
+                        section.classList.toggle('d-none', !faultChecked || !isInterval);
+                    } else {
+                        section.classList.toggle('d-none', !faultChecked);
+                    }
+                }
+            });
+        }
+
+        // Listen for checkbox changes on fault types
+        document.querySelectorAll('.chaos-type-card input[type="checkbox"]').forEach(function (cb) {
+            cb.addEventListener('change', updateParamVisibility);
+        });
+
+        // ── Parameter Mode toggle (Fixed Value ↔ Random Range) ──
+        document.querySelectorAll('input[name="UseInterval"]').forEach(function (r) {
+            r.addEventListener('change', updateParamVisibility);
+        });
+
+        // ── Restore Defaults ──
+        var defaults = {
+            CpuDurationMs: 2000, MemorySizeMb: 100, LatencyMs: 3000, SlowResponseMs: 5000,
+            CpuDurationMinMs: 500, CpuDurationMaxMs: 5000,
+            MemorySizeMinMb: 50, MemorySizeMaxMb: 500,
+            LatencyMinMs: 500, LatencyMaxMs: 10000,
+            SlowResponseMinMs: 500, SlowResponseMaxMs: 10000,
+            StartupDurationMinMs: 5000, StartupDurationMaxMs: 30000
+        };
+
+        document.getElementById('restoreDefaults').addEventListener('click', function () {
+            // Reset fixed sliders
+            document.querySelectorAll('.gauge-param').forEach(function (range) {
+                var targetId = range.dataset.target;
+                if (defaults[targetId] !== undefined) {
+                    range.value = defaults[targetId];
+                    document.getElementById(targetId).value = defaults[targetId];
+                    document.getElementById(targetId + '_val').textContent = fmt(defaults[targetId]);
+                }
+            });
+            // Reset dual-range sliders
+            Object.keys(defaults).forEach(function (key) {
+                var range = document.getElementById(key + '_range');
+                var hidden = document.getElementById(key);
+                var badge = document.getElementById(key + '_val');
+                if (range && hidden) {
+                    range.value = defaults[key];
+                    hidden.value = defaults[key];
+                    if (badge) badge.textContent = fmt(defaults[key]);
+                }
+            });
+            // Re-render fills
+            paramDuals.forEach(function (d) { if (d) d.updateFill(); });
+            if (startupDual) startupDual.updateFill();
+            // Reset global gauges
+            globalGauge.value = 50;
+            globalBadge.textContent = '50%';
+            document.getElementById('globalGaugeMin').value = 20;
+            document.getElementById('globalGaugeMax').value = 80;
+            document.getElementById('globalGaugeMinValue').textContent = '20%';
+            document.getElementById('globalGaugeMaxValue').textContent = '80%';
+            var gFill = document.getElementById('globalIntervalFill');
+            gFill.style.left = '20%';
+            gFill.style.width = '60%';
+        });
+
+        // ── Fixed-value single sliders ──
         document.querySelectorAll('.gauge-param').forEach(function (range) {
             var targetId = range.dataset.target;
             var hidden = document.getElementById(targetId);
@@ -314,7 +571,7 @@
             });
         });
 
-        // Percentage range slider
+        // Percentage slider
         var pctRange = document.getElementById('Percentage_range');
         if (pctRange) {
             var pctHidden = document.getElementById('Percentage');
@@ -325,13 +582,12 @@
             });
         }
 
-        // Global master gauge — maps 0-100% to proportional values for each parameter
+        // ── Fixed-mode Global Intensity gauge ──
         var globalGauge = document.getElementById('globalGauge');
         var globalBadge = document.getElementById('globalGaugeValue');
         globalGauge.addEventListener('input', function () {
             var pct = parseInt(globalGauge.value) / 100;
             globalBadge.textContent = globalGauge.value + '%';
-
             document.querySelectorAll('.gauge-param').forEach(function (range) {
                 var min = parseInt(range.dataset.min);
                 var max = parseInt(range.dataset.max);
@@ -345,53 +601,114 @@
             });
         });
 
-        // Dual-range slider for Startup Duration
-        (function () {
-            var minRange = document.getElementById('StartupDurationMinMs_range');
-            var maxRange = document.getElementById('StartupDurationMaxMs_range');
-            var minHidden = document.getElementById('StartupDurationMinMs');
-            var maxHidden = document.getElementById('StartupDurationMaxMs');
-            var minBadge = document.getElementById('StartupDurationMinMs_val');
-            var maxBadge = document.getElementById('StartupDurationMaxMs_val');
-            var fill = document.getElementById('startupFill');
-            var total = parseInt(maxRange.max) - parseInt(maxRange.min);
+        // ── Generic dual-range initializer ──
+        function fmt(v) { return parseInt(v).toLocaleString('fr-FR'); }
+
+        function initDualRange(minId, maxId, fillId) {
+            var minRange = document.getElementById(minId + '_range');
+            var maxRange = document.getElementById(maxId + '_range');
+            if (!minRange || !maxRange) return null;
+            var minHidden = document.getElementById(minId);
+            var maxHidden = document.getElementById(maxId);
+            var minBadge = document.getElementById(minId + '_val');
+            var maxBadge = document.getElementById(maxId + '_val');
+            var fill = document.getElementById(fillId);
+            var rangeMin = parseInt(minRange.min);
+            var rangeMax = parseInt(minRange.max);
+            var step = parseInt(minRange.step) || 1;
+            var total = rangeMax - rangeMin;
 
             function updateFill() {
                 var lo = parseInt(minRange.value);
                 var hi = parseInt(maxRange.value);
-                var rangeMin = parseInt(minRange.min);
                 fill.style.left = ((lo - rangeMin) / total * 100) + '%';
                 fill.style.width = ((hi - lo) / total * 100) + '%';
             }
 
-            function fmt(v) { return parseInt(v).toLocaleString('fr-FR'); }
-
             minRange.addEventListener('input', function () {
-                if (parseInt(minRange.value) > parseInt(maxRange.value)) {
+                if (parseInt(minRange.value) > parseInt(maxRange.value))
                     minRange.value = maxRange.value;
-                }
                 minHidden.value = minRange.value;
                 minBadge.textContent = fmt(minRange.value);
                 updateFill();
             });
             maxRange.addEventListener('input', function () {
-                if (parseInt(maxRange.value) < parseInt(minRange.value)) {
+                if (parseInt(maxRange.value) < parseInt(minRange.value))
                     maxRange.value = minRange.value;
-                }
                 maxHidden.value = maxRange.value;
                 maxBadge.textContent = fmt(maxRange.value);
                 updateFill();
             });
             updateFill();
+
+            return { minRange: minRange, maxRange: maxRange, minHidden: minHidden, maxHidden: maxHidden,
+                     minBadge: minBadge, maxBadge: maxBadge, rangeMin: rangeMin, rangeMax: rangeMax,
+                     step: step, updateFill: updateFill };
+        }
+
+        // Init parameter dual ranges
+        var paramDuals = [
+            initDualRange('CpuDurationMinMs', 'CpuDurationMaxMs', 'cpuFill'),
+            initDualRange('MemorySizeMinMb', 'MemorySizeMaxMb', 'memFill'),
+            initDualRange('LatencyMinMs', 'LatencyMaxMs', 'latFill'),
+            initDualRange('SlowResponseMinMs', 'SlowResponseMaxMs', 'slowFill')
+        ].filter(function (d) { return d !== null; });
+
+        // Startup Duration dual range (always present)
+        var startupDual = initDualRange('StartupDurationMinMs', 'StartupDurationMaxMs', 'startupFill');
+
+        // ── Global Intensity dual slider (Random Range mode) ──
+        (function () {
+            var gMinRange = document.getElementById('globalGaugeMin');
+            var gMaxRange = document.getElementById('globalGaugeMax');
+            var gMinBadge = document.getElementById('globalGaugeMinValue');
+            var gMaxBadge = document.getElementById('globalGaugeMaxValue');
+            var gFill = document.getElementById('globalIntervalFill');
+
+            function updateGFill() {
+                var lo = parseInt(gMinRange.value);
+                var hi = parseInt(gMaxRange.value);
+                gFill.style.left = lo + '%';
+                gFill.style.width = (hi - lo) + '%';
+            }
+
+            function applyGlobal() {
+                var pctMin = parseInt(gMinRange.value) / 100;
+                var pctMax = parseInt(gMaxRange.value) / 100;
+                gMinBadge.textContent = gMinRange.value + '%';
+                gMaxBadge.textContent = gMaxRange.value + '%';
+                updateGFill();
+
+                paramDuals.forEach(function (d) {
+                    var minVal = Math.round((d.rangeMin + (d.rangeMax - d.rangeMin) * pctMin) / d.step) * d.step;
+                    var maxVal = Math.round((d.rangeMin + (d.rangeMax - d.rangeMin) * pctMax) / d.step) * d.step;
+                    minVal = Math.max(d.rangeMin, Math.min(d.rangeMax, minVal));
+                    maxVal = Math.max(d.rangeMin, Math.min(d.rangeMax, maxVal));
+                    d.minRange.value = minVal;
+                    d.maxRange.value = maxVal;
+                    d.minHidden.value = minVal;
+                    d.maxHidden.value = maxVal;
+                    d.minBadge.textContent = fmt(minVal);
+                    d.maxBadge.textContent = fmt(maxVal);
+                    d.updateFill();
+                });
+            }
+
+            gMinRange.addEventListener('input', function () {
+                if (parseInt(gMinRange.value) > parseInt(gMaxRange.value))
+                    gMinRange.value = gMaxRange.value;
+                applyGlobal();
+            });
+            gMaxRange.addEventListener('input', function () {
+                if (parseInt(gMaxRange.value) < parseInt(gMinRange.value))
+                    gMaxRange.value = gMinRange.value;
+                applyGlobal();
+            });
+            updateGFill();
         })();
 
-        // Toggle Startup Duration section visibility
-        var startupCheckbox = document.getElementById('EnableLongStartup');
-        var startupSection = document.getElementById('startupDurationSection');
-        function toggleStartupSection() {
-            startupSection.classList.toggle('d-none', !startupCheckbox.checked);
-        }
-        startupCheckbox.addEventListener('change', toggleStartupSection);
+        // ── Initial visibility ──
+        updateParamVisibility();
     });
 </script>
 }
