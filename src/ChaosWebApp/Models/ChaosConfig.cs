@@ -2,6 +2,7 @@ namespace ChaosWebApp.Models;
 
 public enum ChaosTarget { WebApp, WebApi, Both }
 public enum FrequencyType { EveryNRequests, EveryNSeconds, Percentage }
+public enum SlowResponseMode { TaskDelay, ThreadSleep }
 
 public class ChaosConfig
 {
@@ -18,6 +19,7 @@ public class ChaosConfig
     public bool EnableError429 { get; set; }
     public bool EnableStackOverflow { get; set; }
     public bool EnableSlowResponse { get; set; }
+    public SlowResponseMode SlowResponseMode { get; set; } = SlowResponseMode.TaskDelay;
     public bool EnableLongStartup { get; set; }
 
     // Parameters
