@@ -2,6 +2,9 @@
 @model ChaosWebApp.Pages.ChaosConfigModel
 @{
     ViewData["Title"] = "Chaos Simulator";
+    var slowModeTooltip = "Task Delay: non-blocking async wait — the thread is released back to the pool. Best for simulating slow I/O without thread starvation. Thread Sleep: blocks the thread — simulates synchronous blocking I/O and can cause thread-pool starvation under load.";
+    var taskDelayTooltip = "Non-blocking async delay — thread returns to the pool while waiting. Use to test timeout handling and slow dependency scenarios.";
+    var threadSleepTooltip = "Blocks a thread-pool thread — simulates synchronous blocking I/O. Use to test thread-pool starvation and contention scenarios.";
 }
 
 <div class="d-flex align-items-center gap-3 mb-4">
@@ -360,6 +363,27 @@
                         <label class="form-label small fw-semibold">
                             <i class="fas fa-hourglass-half text-danger me-1"></i>Slow Response (ms)
                         </label>
+                        <div class="mb-2">
+                            <label class="form-label small fw-semibold mb-1">
+                                <i class="fas fa-cogs text-primary me-1"></i>Delay Mode
+                                <i class="fas fa-info-circle text-muted ms-1" data-bs-toggle="tooltip" data-bs-placement="top"
+                                   title="@slowModeTooltip"></i>
+                            </label>
+                            <div class="d-flex gap-3">
+                                @foreach (var mode in Enum.GetValues<ChaosWebApp.Models.SlowResponseMode>())
+                                {
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="SlowResponseMode" value="@((int)mode)"
+                                               id="slowMode_fixed_@mode" @(Model.Config.SlowResponseMode == mode ? "checked" : "") />
+                                        <label class="form-check-label small" for="slowMode_fixed_@mode"
+                                               data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                               title="@(mode == ChaosWebApp.Models.SlowResponseMode.TaskDelay ? taskDelayTooltip : threadSleepTooltip)">
+                                            @(mode == ChaosWebApp.Models.SlowResponseMode.TaskDelay ? "Task Delay" : "Thread Sleep")
+                                        </label>
+                                    </div>
+                                }
+                            </div>
+                        </div>
                         <div class="d-flex align-items-center gap-3">
                             <i class="fas fa-volume-off text-muted small"></i>
                             <input type="range" class="form-range gauge-slider gauge-param flex-grow-1" id="SlowResponseMs_range"
@@ -376,6 +400,27 @@
                         <label class="form-label small fw-semibold">
                             <i class="fas fa-hourglass-half text-danger me-1"></i>Slow Response (ms)
                         </label>
+                        <div class="mb-2">
+                            <label class="form-label small fw-semibold mb-1">
+                                <i class="fas fa-cogs text-primary me-1"></i>Delay Mode
+                                <i class="fas fa-info-circle text-muted ms-1" data-bs-toggle="tooltip" data-bs-placement="top"
+                                   title="@slowModeTooltip"></i>
+                            </label>
+                            <div class="d-flex gap-3">
+                                @foreach (var mode in Enum.GetValues<ChaosWebApp.Models.SlowResponseMode>())
+                                {
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="SlowResponseMode" value="@((int)mode)"
+                                               id="slowMode_interval_@mode" @(Model.Config.SlowResponseMode == mode ? "checked" : "") />
+                                        <label class="form-check-label small" for="slowMode_interval_@mode"
+                                               data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                               title="@(mode == ChaosWebApp.Models.SlowResponseMode.TaskDelay ? taskDelayTooltip : threadSleepTooltip)">
+                                            @(mode == ChaosWebApp.Models.SlowResponseMode.TaskDelay ? "Task Delay" : "Thread Sleep")
+                                        </label>
+                                    </div>
+                                }
+                            </div>
+                        </div>
                         <div class="dual-range-wrap">
                             <div class="dual-range-track">
                                 <div class="dual-range-fill" id="slowFill"></div>
@@ -435,6 +480,12 @@
 @section Scripts {
 <script>
     document.addEventListener('DOMContentLoaded', function () {
+        // ── Initialize Bootstrap tooltips ──
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        tooltipTriggerList.forEach(function (tooltipTriggerEl) {
+            new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+
         // ── Select All / None / Random ──
         document.getElementById('selectAll').addEventListener('click', function () {
             document.querySelectorAll('.chaos-type-card input[type="checkbox"]').forEach(cb => { cb.checked = true; });

@@ -83,7 +83,10 @@ public class ChaosMiddleware
                 var slowMs = cfg.UseInterval
                     ? Random.Shared.Next(cfg.SlowResponseMinMs, cfg.SlowResponseMaxMs + 1)
                     : cfg.SlowResponseMs;
-                await Task.Delay(slowMs);
+                if (cfg.SlowResponseMode == Models.SlowResponseMode.ThreadSleep)
+                    Thread.Sleep(slowMs);
+                else
+                    await Task.Delay(slowMs);
                 break;
 
             case "Error404":
