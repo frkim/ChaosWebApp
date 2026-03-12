@@ -84,7 +84,7 @@ public class ChaosMiddleware
                     ? Random.Shared.Next(cfg.SlowResponseMinMs, cfg.SlowResponseMaxMs + 1)
                     : cfg.SlowResponseMs;
                 if (cfg.SlowResponseMode == Models.SlowResponseMode.ThreadSleep)
-                    await Task.Run(() => Thread.Sleep(slowMs));
+                    Thread.Sleep(slowMs);
                 else
                     await Task.Delay(slowMs);
                 break;

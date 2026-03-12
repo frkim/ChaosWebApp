@@ -2,6 +2,9 @@
 @model ChaosWebApp.Pages.ChaosConfigModel
 @{
     ViewData["Title"] = "Chaos Simulator";
+    var slowModeTooltip = "Task Delay: non-blocking async wait — the thread is released back to the pool. Best for simulating slow I/O without thread starvation. Thread Sleep: blocks the thread — simulates synchronous blocking I/O and can cause thread-pool starvation under load.";
+    var taskDelayTooltip = "Non-blocking async delay — thread returns to the pool while waiting. Use to test timeout handling and slow dependency scenarios.";
+    var threadSleepTooltip = "Blocks a thread-pool thread — simulates synchronous blocking I/O. Use to test thread-pool starvation and contention scenarios.";
 }
 
 <div class="d-flex align-items-center gap-3 mb-4">
@@ -364,7 +367,7 @@
                             <label class="form-label small fw-semibold mb-1">
                                 <i class="fas fa-cogs text-primary me-1"></i>Delay Mode
                                 <i class="fas fa-info-circle text-muted ms-1" data-bs-toggle="tooltip" data-bs-placement="top"
-                                   title="Task Delay: non-blocking async wait — the thread is released back to the pool. Best for simulating slow I/O without thread starvation. Thread Sleep: blocks the thread — simulates synchronous blocking I/O and can cause thread-pool starvation under load."></i>
+                                   title="@slowModeTooltip"></i>
                             </label>
                             <div class="d-flex gap-3">
                                 @foreach (var mode in Enum.GetValues<ChaosWebApp.Models.SlowResponseMode>())
@@ -374,7 +377,7 @@
                                                id="slowMode_fixed_@mode" @(Model.Config.SlowResponseMode == mode ? "checked" : "") />
                                         <label class="form-check-label small" for="slowMode_fixed_@mode"
                                                data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                               title="@(mode == ChaosWebApp.Models.SlowResponseMode.TaskDelay ? "Non-blocking async delay — thread returns to the pool while waiting. Use to test timeout handling and slow dependency scenarios." : "Blocks a thread-pool thread — simulates synchronous blocking I/O. Use to test thread-pool starvation and contention scenarios.")">
+                                               title="@(mode == ChaosWebApp.Models.SlowResponseMode.TaskDelay ? taskDelayTooltip : threadSleepTooltip)">
                                             @(mode == ChaosWebApp.Models.SlowResponseMode.TaskDelay ? "Task Delay" : "Thread Sleep")
                                         </label>
                                     </div>
@@ -401,7 +404,7 @@
                             <label class="form-label small fw-semibold mb-1">
                                 <i class="fas fa-cogs text-primary me-1"></i>Delay Mode
                                 <i class="fas fa-info-circle text-muted ms-1" data-bs-toggle="tooltip" data-bs-placement="top"
-                                   title="Task Delay: non-blocking async wait — the thread is released back to the pool. Best for simulating slow I/O without thread starvation. Thread Sleep: blocks the thread — simulates synchronous blocking I/O and can cause thread-pool starvation under load."></i>
+                                   title="@slowModeTooltip"></i>
                             </label>
                             <div class="d-flex gap-3">
                                 @foreach (var mode in Enum.GetValues<ChaosWebApp.Models.SlowResponseMode>())
@@ -411,7 +414,7 @@
                                                id="slowMode_interval_@mode" @(Model.Config.SlowResponseMode == mode ? "checked" : "") />
                                         <label class="form-check-label small" for="slowMode_interval_@mode"
                                                data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                               title="@(mode == ChaosWebApp.Models.SlowResponseMode.TaskDelay ? "Non-blocking async delay — thread returns to the pool while waiting. Use to test timeout handling and slow dependency scenarios." : "Blocks a thread-pool thread — simulates synchronous blocking I/O. Use to test thread-pool starvation and contention scenarios.")">
+                                               title="@(mode == ChaosWebApp.Models.SlowResponseMode.TaskDelay ? taskDelayTooltip : threadSleepTooltip)">
                                             @(mode == ChaosWebApp.Models.SlowResponseMode.TaskDelay ? "Task Delay" : "Thread Sleep")
                                         </label>
                                     </div>
