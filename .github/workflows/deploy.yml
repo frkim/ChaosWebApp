@@ -24,6 +24,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Validate Azure variables
+        run: |
+          echo "AZURE_CLIENT_ID=$AZURE_CLIENT_ID"
+          echo "AZURE_TENANT_ID=$AZURE_TENANT_ID"
+          echo "AZURE_SUBSCRIPTION_ID=$AZURE_SUBSCRIPTION_ID"
+          echo "AZURE_ENV_NAME=$AZURE_ENV_NAME"
+          echo "AZURE_LOCATION=$AZURE_LOCATION"
+          if [ -z "$AZURE_CLIENT_ID" ] || [ -z "$AZURE_TENANT_ID" ] || [ -z "$AZURE_SUBSCRIPTION_ID" ]; then
+            echo "::error::Missing required Azure variables. Set AZURE_CLIENT_ID, AZURE_TENANT_ID and AZURE_SUBSCRIPTION_ID in GitHub repo Settings > Secrets and variables > Actions > Variables."
+            exit 1
+          fi
+
       - name: Install azd
         uses: Azure/setup-azd@v2
 
@@ -32,8 +44,7 @@ jobs:
           azd auth login \
             --client-id "$AZURE_CLIENT_ID" \
             --federated-credential-provider "github" \
-            --tenant-id "$AZURE_TENANT_ID" \
-            --no-prompt
+            --tenant-id "$AZURE_TENANT_ID"
 
       - name: Provision and Deploy
         run: azd up -e "$AZURE_ENV_NAME" --no-prompt
