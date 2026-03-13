@@ -1,6 +1,9 @@
 name: chaoswebapp
 metadata:
   template: ChaosWebApp
+infra:
+  parameters:
+    hostType: ${AZURE_HOST_TYPE:=containerapp}
 services:
   chaoswebapp:
     project: ./src/ChaosWebApp

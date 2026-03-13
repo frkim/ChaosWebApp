@@ -13,6 +13,10 @@ param appConfigSku string = 'Standard'
 @description('ASP.NET Core environment (Development / Production).')
 param aspNetCoreEnvironment string = 'Production'
 
+@description('Hosting platform: containerapp (Azure Container Apps, default) or appservice (Azure Web App for Containers).')
+@allowed([ 'containerapp', 'appservice' ])
+param hostType string = 'containerapp'
+
 // ── Derived names ─────────────────────────────────────────────────────────────
 var uniqueSuffix     = uniqueString(resourceGroup().id)
 var acrName          = '${replace(appName, '-', '')}${uniqueSuffix}'
@@ -21,6 +25,8 @@ var appInsightsName  = '${appName}-ai-${uniqueSuffix}'
 var appConfigName    = '${appName}-cfg-${uniqueSuffix}'
 var containerEnvName = '${appName}-env-${uniqueSuffix}'
 var containerAppName = '${appName}-app-${uniqueSuffix}'
+var appServicePlanName = '${appName}-plan-${uniqueSuffix}'
+var webAppName       = '${appName}-web-${uniqueSuffix}'
 var loadTestName     = '${appName}-lt-${uniqueSuffix}'
 var identityName     = '${appName}-id-${uniqueSuffix}'
 
@@ -115,7 +121,7 @@ module appConfiguration 'modules/appConfiguration.bicep' = {
   }
 }
 
-module containerApp 'modules/containerApp.bicep' = {
+module containerApp 'modules/containerApp.bicep' = if (hostType == 'containerapp') {
   name: 'containerAppDeploy'
   dependsOn: [ acrPullAssignment ]
   params: {
@@ -125,6 +131,23 @@ module containerApp 'modules/containerApp.bicep' = {
     containerImage:              containerImage
     logAnalyticsWorkspaceId:     logAnalytics.outputs.workspaceId
     logAnalyticsWorkspaceKey:    logAnalytics.outputs.primarySharedKey
+    appInsightsConnectionString: appInsights.outputs.connectionString
+    appConfigEndpoint:           appConfiguration.outputs.endpoint
+    aspNetCoreEnvironment:       aspNetCoreEnvironment
+    acrLoginServer:              acr.outputs.loginServer
+    managedIdentityId:           managedIdentity.id
+    managedIdentityClientId:     managedIdentity.properties.clientId
+  }
+}
+
+module webApp 'modules/webApp.bicep' = if (hostType == 'appservice') {
+  name: 'webAppDeploy'
+  dependsOn: [ acrPullAssignment ]
+  params: {
+    appServicePlanName:          appServicePlanName
+    webAppName:                  webAppName
+    location:                    location
+    containerImage:              containerImage
     appInsightsConnectionString: appInsights.outputs.connectionString
     appConfigEndpoint:           appConfiguration.outputs.endpoint
     aspNetCoreEnvironment:       aspNetCoreEnvironment
@@ -144,7 +167,8 @@ module loadTesting 'modules/loadTesting.bicep' = {
 
 // ── Outputs ───────────────────────────────────────────────────────────────────
 output AZURE_CONTAINER_REGISTRY_ENDPOINT string = acr.outputs.loginServer
-output containerAppUrl            string = containerApp.outputs.fqdn
+output hostType                   string = hostType
+output appUrl                     string = hostType == 'containerapp' ? containerApp.outputs.fqdn : webApp.outputs.fqdn
 output appInsightsConnectionString string = appInsights.outputs.connectionString
 output acrLoginServer             string = acr.outputs.loginServer
 output appConfigEndpoint          string = appConfiguration.outputs.endpoint

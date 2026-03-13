@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.38.33.27573",
-      "templateHash": "30218361296324718"
+      "templateHash": "7601885045779612912"
     }
   },
   "parameters": {
@@ -43,6 +43,17 @@
       "metadata": {
         "description": "ASP.NET Core environment (Development / Production)."
       }
+    },
+    "hostType": {
+      "type": "string",
+      "defaultValue": "containerapp",
+      "allowedValues": [
+        "containerapp",
+        "appservice"
+      ],
+      "metadata": {
+        "description": "Hosting platform: containerapp (Azure Container Apps, default) or appservice (Azure Web App for Containers)."
+      }
     }
   },
   "variables": {
@@ -53,10 +64,13 @@
     "appConfigName": "[format('{0}-cfg-{1}', parameters('appName'), variables('uniqueSuffix'))]",
     "containerEnvName": "[format('{0}-env-{1}', parameters('appName'), variables('uniqueSuffix'))]",
     "containerAppName": "[format('{0}-app-{1}', parameters('appName'), variables('uniqueSuffix'))]",
+    "appServicePlanName": "[format('{0}-plan-{1}', parameters('appName'), variables('uniqueSuffix'))]",
+    "webAppName": "[format('{0}-web-{1}', parameters('appName'), variables('uniqueSuffix'))]",
     "loadTestName": "[format('{0}-lt-{1}', parameters('appName'), variables('uniqueSuffix'))]",
     "identityName": "[format('{0}-id-{1}', parameters('appName'), variables('uniqueSuffix'))]",
     "acrPullRoleId": "7f951dda-4ed3-4680-a7ca-43fe172d538d",
-    "appConfigDataReaderRoleId": "516239f1-63e1-4d78-a4de-a74fb236a071"
+    "appConfigDataReaderRoleId": "516239f1-63e1-4d78-a4de-a74fb236a071",
+    "appConfigDataOwnerRoleId": "5ae67dd6-50cb-40e7-96ff-dc2bfa4b606b"
   },
   "resources": [
     {
@@ -88,6 +102,21 @@
       "properties": {
         "principalId": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('identityName')), '2023-01-31').principalId]",
         "roleDefinitionId": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', variables('appConfigDataReaderRoleId'))]",
+        "principalType": "ServicePrincipal"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/deployments', 'appConfigDeploy')]",
+        "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('identityName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Authorization/roleAssignments",
+      "apiVersion": "2022-04-01",
+      "scope": "[format('Microsoft.AppConfiguration/configurationStores/{0}', variables('appConfigName'))]",
+      "name": "[guid(resourceId('Microsoft.AppConfiguration/configurationStores', variables('appConfigName')), resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('identityName')), variables('appConfigDataOwnerRoleId'))]",
+      "properties": {
+        "principalId": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('identityName')), '2023-01-31').principalId]",
+        "roleDefinitionId": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', variables('appConfigDataOwnerRoleId'))]",
         "principalType": "ServicePrincipal"
       },
       "dependsOn": [
@@ -399,6 +428,7 @@
       }
     },
     {
+      "condition": "[equals(parameters('hostType'), 'containerapp')]",
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2025-04-01",
       "name": "containerAppDeploy",
@@ -681,6 +711,212 @@
       ]
     },
     {
+      "condition": "[equals(parameters('hostType'), 'appservice')]",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2025-04-01",
+      "name": "webAppDeploy",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "appServicePlanName": {
+            "value": "[variables('appServicePlanName')]"
+          },
+          "webAppName": {
+            "value": "[variables('webAppName')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          },
+          "containerImage": {
+            "value": "[parameters('containerImage')]"
+          },
+          "appInsightsConnectionString": {
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', 'appInsightsDeploy'), '2025-04-01').outputs.connectionString.value]"
+          },
+          "appConfigEndpoint": {
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', 'appConfigDeploy'), '2025-04-01').outputs.endpoint.value]"
+          },
+          "aspNetCoreEnvironment": {
+            "value": "[parameters('aspNetCoreEnvironment')]"
+          },
+          "acrLoginServer": {
+            "value": "[reference(resourceId('Microsoft.Resources/deployments', 'acrDeploy'), '2025-04-01').outputs.loginServer.value]"
+          },
+          "managedIdentityId": {
+            "value": "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('identityName'))]"
+          },
+          "managedIdentityClientId": {
+            "value": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('identityName')), '2023-01-31').clientId]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.38.33.27573",
+              "templateHash": "2300657133516312552"
+            }
+          },
+          "parameters": {
+            "appServicePlanName": {
+              "type": "string",
+              "metadata": {
+                "description": "Name of the App Service Plan."
+              }
+            },
+            "webAppName": {
+              "type": "string",
+              "metadata": {
+                "description": "Name of the Web App."
+              }
+            },
+            "location": {
+              "type": "string",
+              "metadata": {
+                "description": "Azure region."
+              }
+            },
+            "containerImage": {
+              "type": "string",
+              "metadata": {
+                "description": "Full container image reference."
+              }
+            },
+            "appInsightsConnectionString": {
+              "type": "securestring",
+              "metadata": {
+                "description": "Application Insights connection string."
+              }
+            },
+            "appConfigEndpoint": {
+              "type": "string",
+              "metadata": {
+                "description": "Azure App Configuration endpoint URL."
+              }
+            },
+            "aspNetCoreEnvironment": {
+              "type": "string",
+              "metadata": {
+                "description": "ASP.NET Core environment name."
+              }
+            },
+            "acrLoginServer": {
+              "type": "string",
+              "metadata": {
+                "description": "ACR login server."
+              }
+            },
+            "managedIdentityId": {
+              "type": "string",
+              "metadata": {
+                "description": "User-assigned managed identity resource ID."
+              }
+            },
+            "managedIdentityClientId": {
+              "type": "string",
+              "metadata": {
+                "description": "User-assigned managed identity client ID."
+              }
+            }
+          },
+          "resources": [
+            {
+              "type": "Microsoft.Web/serverfarms",
+              "apiVersion": "2023-12-01",
+              "name": "[parameters('appServicePlanName')]",
+              "location": "[parameters('location')]",
+              "kind": "linux",
+              "properties": {
+                "reserved": true
+              },
+              "sku": {
+                "name": "B1",
+                "tier": "Basic"
+              }
+            },
+            {
+              "type": "Microsoft.Web/sites",
+              "apiVersion": "2023-12-01",
+              "name": "[parameters('webAppName')]",
+              "location": "[parameters('location')]",
+              "tags": {
+                "azd-service-name": "chaoswebapp"
+              },
+              "identity": {
+                "type": "UserAssigned",
+                "userAssignedIdentities": {
+                  "[format('{0}', parameters('managedIdentityId'))]": {}
+                }
+              },
+              "properties": {
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('appServicePlanName'))]",
+                "siteConfig": {
+                  "linuxFxVersion": "[format('DOCKER|{0}', parameters('containerImage'))]",
+                  "acrUseManagedIdentityCreds": true,
+                  "acrUserManagedIdentityID": "[parameters('managedIdentityClientId')]",
+                  "alwaysOn": true,
+                  "http20Enabled": true,
+                  "healthCheckPath": "/health/live",
+                  "appSettings": [
+                    {
+                      "name": "ASPNETCORE_ENVIRONMENT",
+                      "value": "[parameters('aspNetCoreEnvironment')]"
+                    },
+                    {
+                      "name": "WEBSITES_PORT",
+                      "value": "8080"
+                    },
+                    {
+                      "name": "APPLICATIONINSIGHTS_CONNECTION_STRING",
+                      "value": "[parameters('appInsightsConnectionString')]"
+                    },
+                    {
+                      "name": "AZURE_APPCONFIG_ENDPOINT",
+                      "value": "[parameters('appConfigEndpoint')]"
+                    },
+                    {
+                      "name": "AZURE_CLIENT_ID",
+                      "value": "[parameters('managedIdentityClientId')]"
+                    },
+                    {
+                      "name": "DOCKER_REGISTRY_SERVER_URL",
+                      "value": "[format('https://{0}', parameters('acrLoginServer'))]"
+                    }
+                  ]
+                },
+                "httpsOnly": true
+              },
+              "dependsOn": [
+                "[resourceId('Microsoft.Web/serverfarms', parameters('appServicePlanName'))]"
+              ]
+            }
+          ],
+          "outputs": {
+            "fqdn": {
+              "type": "string",
+              "value": "[format('https://{0}', reference(resourceId('Microsoft.Web/sites', parameters('webAppName')), '2023-12-01').defaultHostName)]"
+            },
+            "resourceId": {
+              "type": "string",
+              "value": "[resourceId('Microsoft.Web/sites', parameters('webAppName'))]"
+            }
+          }
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/deployments', 'acrDeploy')]",
+        "[extensionResourceId(resourceId('Microsoft.ContainerRegistry/registries', variables('acrName')), 'Microsoft.Authorization/roleAssignments', guid(resourceId('Microsoft.ContainerRegistry/registries', variables('acrName')), resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('identityName')), variables('acrPullRoleId')))]",
+        "[resourceId('Microsoft.Resources/deployments', 'appConfigDeploy')]",
+        "[resourceId('Microsoft.Resources/deployments', 'appInsightsDeploy')]",
+        "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('identityName'))]"
+      ]
+    },
+    {
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2025-04-01",
       "name": "loadTestingDeploy",
@@ -745,9 +981,17 @@
     }
   ],
   "outputs": {
-    "containerAppUrl": {
+    "AZURE_CONTAINER_REGISTRY_ENDPOINT": {
       "type": "string",
-      "value": "[reference(resourceId('Microsoft.Resources/deployments', 'containerAppDeploy'), '2025-04-01').outputs.fqdn.value]"
+      "value": "[reference(resourceId('Microsoft.Resources/deployments', 'acrDeploy'), '2025-04-01').outputs.loginServer.value]"
+    },
+    "hostType": {
+      "type": "string",
+      "value": "[parameters('hostType')]"
+    },
+    "appUrl": {
+      "type": "string",
+      "value": "[if(equals(parameters('hostType'), 'containerapp'), reference(resourceId('Microsoft.Resources/deployments', 'containerAppDeploy'), '2025-04-01').outputs.fqdn.value, reference(resourceId('Microsoft.Resources/deployments', 'webAppDeploy'), '2025-04-01').outputs.fqdn.value)]"
     },
     "appInsightsConnectionString": {
       "type": "string",
