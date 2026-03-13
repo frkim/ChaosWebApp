@@ -143,6 +143,7 @@ module loadTesting 'modules/loadTesting.bicep' = {
 }
 
 // ── Outputs ───────────────────────────────────────────────────────────────────
+output AZURE_CONTAINER_REGISTRY_ENDPOINT string = acr.outputs.loginServer
 output containerAppUrl            string = containerApp.outputs.fqdn
 output appInsightsConnectionString string = appInsights.outputs.connectionString
 output acrLoginServer             string = acr.outputs.loginServer
