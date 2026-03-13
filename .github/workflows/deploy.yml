@@ -30,9 +30,10 @@ jobs:
       - name: Log in with Azure (federated credentials)
         run: |
           azd auth login \
-            --client-id "${{ vars.AZURE_CLIENT_ID }}" \
+            --client-id "$AZURE_CLIENT_ID" \
             --federated-credential-provider "github" \
-            --tenant-id "${{ vars.AZURE_TENANT_ID }}"
+            --tenant-id "$AZURE_TENANT_ID" \
+            --no-prompt
 
       - name: Provision and Deploy
         run: azd up -e "$AZURE_ENV_NAME" --no-prompt
