@@ -358,32 +358,34 @@
                         <div class="form-text">Min–Max latency (100–60,000 ms)</div>
                     </div>
 
+                    <!-- ═══ Slow Response — Delay Mode (shared) ═══ -->
+                    <div class="mb-3 param-section" data-param-for="EnableSlowResponse">
+                        <label class="form-label small fw-semibold mb-1">
+                            <i class="fas fa-cogs text-primary me-1"></i>Delay Mode
+                            <i class="fas fa-info-circle text-muted ms-1" data-bs-toggle="tooltip" data-bs-placement="top"
+                               title="@slowModeTooltip"></i>
+                        </label>
+                        <div class="d-flex gap-3">
+                            @foreach (var mode in Enum.GetValues<ChaosWebApp.Models.SlowResponseMode>())
+                            {
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="SlowResponseMode" value="@((int)mode)"
+                                           id="slowMode_@mode" @(Model.Config.SlowResponseMode == mode ? "checked" : "") />
+                                    <label class="form-check-label small" for="slowMode_@mode"
+                                           data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                           title="@(mode == ChaosWebApp.Models.SlowResponseMode.TaskDelay ? taskDelayTooltip : threadSleepTooltip)">
+                                        @(mode == ChaosWebApp.Models.SlowResponseMode.TaskDelay ? "Task Delay" : "Thread Sleep")
+                                    </label>
+                                </div>
+                            }
+                        </div>
+                    </div>
+
                     <!-- ═══ Slow Response — Fixed ═══ -->
                     <div class="mb-3 param-fixed param-section" data-param-for="EnableSlowResponse">
                         <label class="form-label small fw-semibold">
                             <i class="fas fa-hourglass-half text-danger me-1"></i>Slow Response (ms)
                         </label>
-                        <div class="mb-2">
-                            <label class="form-label small fw-semibold mb-1">
-                                <i class="fas fa-cogs text-primary me-1"></i>Delay Mode
-                                <i class="fas fa-info-circle text-muted ms-1" data-bs-toggle="tooltip" data-bs-placement="top"
-                                   title="@slowModeTooltip"></i>
-                            </label>
-                            <div class="d-flex gap-3">
-                                @foreach (var mode in Enum.GetValues<ChaosWebApp.Models.SlowResponseMode>())
-                                {
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="SlowResponseMode" value="@((int)mode)"
-                                               id="slowMode_fixed_@mode" @(Model.Config.SlowResponseMode == mode ? "checked" : "") />
-                                        <label class="form-check-label small" for="slowMode_fixed_@mode"
-                                               data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                               title="@(mode == ChaosWebApp.Models.SlowResponseMode.TaskDelay ? taskDelayTooltip : threadSleepTooltip)">
-                                            @(mode == ChaosWebApp.Models.SlowResponseMode.TaskDelay ? "Task Delay" : "Thread Sleep")
-                                        </label>
-                                    </div>
-                                }
-                            </div>
-                        </div>
                         <div class="d-flex align-items-center gap-3">
                             <i class="fas fa-volume-off text-muted small"></i>
                             <input type="range" class="form-range gauge-slider gauge-param flex-grow-1" id="SlowResponseMs_range"
@@ -400,27 +402,6 @@
                         <label class="form-label small fw-semibold">
                             <i class="fas fa-hourglass-half text-danger me-1"></i>Slow Response (ms)
                         </label>
-                        <div class="mb-2">
-                            <label class="form-label small fw-semibold mb-1">
-                                <i class="fas fa-cogs text-primary me-1"></i>Delay Mode
-                                <i class="fas fa-info-circle text-muted ms-1" data-bs-toggle="tooltip" data-bs-placement="top"
-                                   title="@slowModeTooltip"></i>
-                            </label>
-                            <div class="d-flex gap-3">
-                                @foreach (var mode in Enum.GetValues<ChaosWebApp.Models.SlowResponseMode>())
-                                {
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="SlowResponseMode" value="@((int)mode)"
-                                               id="slowMode_interval_@mode" @(Model.Config.SlowResponseMode == mode ? "checked" : "") />
-                                        <label class="form-check-label small" for="slowMode_interval_@mode"
-                                               data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                               title="@(mode == ChaosWebApp.Models.SlowResponseMode.TaskDelay ? taskDelayTooltip : threadSleepTooltip)">
-                                            @(mode == ChaosWebApp.Models.SlowResponseMode.TaskDelay ? "Task Delay" : "Thread Sleep")
-                                        </label>
-                                    </div>
-                                }
-                            </div>
-                        </div>
                         <div class="dual-range-wrap">
                             <div class="dual-range-track">
                                 <div class="dual-range-fill" id="slowFill"></div>
@@ -595,6 +576,9 @@
                     if (badge) badge.textContent = fmt(defaults[key]);
                 }
             });
+            // Reset SlowResponseMode to TaskDelay (default)
+            var taskDelayRadio = document.getElementById('slowMode_TaskDelay');
+            if (taskDelayRadio) taskDelayRadio.checked = true;
             // Re-render fills
             paramDuals.forEach(function (d) { if (d) d.updateFill(); });
             if (startupDual) startupDual.updateFill();
