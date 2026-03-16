@@ -15,6 +15,8 @@ public interface IChaosService
 public class ChaosService : IChaosService
 {
     private const string AppConfigKey = "ChaosWebApp:ChaosConfig";
+    private static readonly string LocalConfigPath = Path.Combine(
+        AppContext.BaseDirectory, "chaos-config.json");
 
     private volatile ChaosConfig _config = new();
     private int _requestCounter = 0;
@@ -26,7 +28,7 @@ public class ChaosService : IChaosService
     {
         _logger = logger;
         _configClient = configClient;
-        LoadFromAppConfiguration();
+        LoadConfig();
     }
 
     public ChaosConfig GetConfig() => _config;
@@ -34,7 +36,7 @@ public class ChaosService : IChaosService
     public void UpdateConfig(ChaosConfig config)
     {
         _config = config;
-        SaveToAppConfiguration(config);
+        SaveConfig(config);
     }
 
     public bool ShouldTriggerChaos(string context)
@@ -91,46 +93,88 @@ public class ChaosService : IChaosService
         return types;
     }
 
-    private void LoadFromAppConfiguration()
+    private void LoadConfig()
     {
-        if (_configClient is null) return;
-
-        try
+        if (_configClient is not null)
         {
-            var response = _configClient.GetConfigurationSetting(AppConfigKey);
-            if (response?.Value?.Value is not null)
+            try
             {
-                var loaded = JsonSerializer.Deserialize<ChaosConfig>(response.Value.Value);
-                if (loaded is not null)
+                var response = _configClient.GetConfigurationSetting(AppConfigKey);
+                if (response?.Value?.Value is not null)
                 {
-                    _config = loaded;
-                    _logger.LogInformation("Chaos config loaded from Azure App Configuration.");
+                    var loaded = JsonSerializer.Deserialize<ChaosConfig>(response.Value.Value);
+                    if (loaded is not null)
+                    {
+                        _config = loaded;
+                        _logger.LogInformation("Chaos config loaded from Azure App Configuration.");
+                        return;
+                    }
                 }
             }
+            catch (Azure.RequestFailedException ex) when (ex.Status == 404)
+            {
+                _logger.LogInformation("No chaos config found in App Configuration; using defaults.");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning(ex, "Failed to load chaos config from App Configuration; using defaults.");
+            }
         }
-        catch (Azure.RequestFailedException ex) when (ex.Status == 404)
+
+        LoadFromLocalFile();
+    }
+
+    private void SaveConfig(ChaosConfig config)
+    {
+        if (_configClient is not null)
         {
-            _logger.LogInformation("No chaos config found in App Configuration; using defaults.");
+            try
+            {
+                var json = JsonSerializer.Serialize(config);
+                _configClient.SetConfigurationSetting(AppConfigKey, json);
+                _logger.LogInformation("Chaos config saved to Azure App Configuration.");
+                return;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning(ex, "Failed to save chaos config to App Configuration; falling back to local file.");
+            }
+        }
+
+        SaveToLocalFile(config);
+    }
+
+    private void LoadFromLocalFile()
+    {
+        try
+        {
+            if (!File.Exists(LocalConfigPath)) return;
+
+            var json = File.ReadAllText(LocalConfigPath);
+            var loaded = JsonSerializer.Deserialize<ChaosConfig>(json);
+            if (loaded is not null)
+            {
+                _config = loaded;
+                _logger.LogInformation("Chaos config loaded from local file {Path}.", LocalConfigPath);
+            }
         }
         catch (Exception ex)
         {
-            _logger.LogWarning(ex, "Failed to load chaos config from App Configuration; using defaults.");
+            _logger.LogWarning(ex, "Failed to load chaos config from local file; using defaults.");
         }
     }
 
-    private void SaveToAppConfiguration(ChaosConfig config)
+    private void SaveToLocalFile(ChaosConfig config)
     {
-        if (_configClient is null) return;
-
         try
         {
-            var json = JsonSerializer.Serialize(config);
-            _configClient.SetConfigurationSetting(AppConfigKey, json);
-            _logger.LogInformation("Chaos config saved to Azure App Configuration.");
+            var json = JsonSerializer.Serialize(config, new JsonSerializerOptions { WriteIndented = true });
+            File.WriteAllText(LocalConfigPath, json);
+            _logger.LogInformation("Chaos config saved to local file {Path}.", LocalConfigPath);
         }
         catch (Exception ex)
         {
-            _logger.LogWarning(ex, "Failed to save chaos config to App Configuration; config remains in-memory only.");
+            _logger.LogWarning(ex, "Failed to save chaos config to local file; config remains in-memory only.");
         }
     }
 }
