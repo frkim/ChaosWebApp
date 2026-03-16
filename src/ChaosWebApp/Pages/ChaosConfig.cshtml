@@ -144,7 +144,7 @@
                             <input type="range" class="form-range gauge-slider gauge-percentage flex-grow-1" id="Percentage_range"
                                    min="1" max="100" step="1" value="@Model.Config.Percentage" />
                             <i class="fas fa-volume-up text-muted small"></i>
-                            <span class="badge bg-primary gauge-value-badge" id="Percentage_val">@Model.Config.Percentage%</span>
+                            <input type="number" class="form-control form-control-sm text-center gauge-value-input bg-primary text-white border-0" id="Percentage_val" value="@Model.Config.Percentage" min="1" max="100" step="1" />
                         </div>
                         <input type="hidden" id="Percentage" name="Percentage" value="@Model.Config.Percentage" />
                     </div>
@@ -215,7 +215,7 @@
                             <input type="range" class="form-range gauge-slider gauge-global flex-grow-1" id="globalGauge"
                                    min="0" max="100" value="50" />
                             <i class="fas fa-volume-up text-muted"></i>
-                            <span class="badge bg-primary gauge-value-badge" id="globalGaugeValue">50%</span>
+                            <input type="number" class="form-control form-control-sm text-center gauge-value-input bg-primary text-white border-0" id="globalGaugeValue" value="50" min="0" max="100" step="1" />
                         </div>
                         <div class="form-text">Proportionally adjusts all parameters below</div>
                     </div>
@@ -235,8 +235,8 @@
                                    min="0" max="100" step="1" value="80" />
                         </div>
                         <div class="d-flex justify-content-between mt-1">
-                            <span class="badge bg-primary gauge-value-badge" id="globalGaugeMinValue">20%</span>
-                            <span class="badge bg-primary gauge-value-badge" id="globalGaugeMaxValue">80%</span>
+                            <input type="number" class="form-control form-control-sm text-center gauge-value-input bg-primary text-white border-0" id="globalGaugeMinValue" value="20" min="0" max="100" step="1" />
+                            <input type="number" class="form-control form-control-sm text-center gauge-value-input bg-primary text-white border-0" id="globalGaugeMaxValue" value="80" min="0" max="100" step="1" />
                         </div>
                         <div class="form-text">Proportionally adjusts all min–max ranges below</div>
                     </div>
@@ -249,13 +249,13 @@
                         <div class="d-flex align-items-center gap-3">
                             <i class="fas fa-volume-off text-muted small"></i>
                             <input type="range" class="form-range gauge-slider gauge-param flex-grow-1" id="CpuDurationMs_range"
-                                   min="100" max="30000" step="100" value="@Model.Config.CpuDurationMs"
-                                   data-target="CpuDurationMs" data-min="100" data-max="30000" />
+                                   min="10" max="30000" step="10" value="@Model.Config.CpuDurationMs"
+                                   data-target="CpuDurationMs" data-min="10" data-max="30000" />
                             <i class="fas fa-volume-up text-muted small"></i>
-                            <span class="badge bg-danger gauge-value-badge" id="CpuDurationMs_val">@Model.Config.CpuDurationMs</span>
+                            <input type="number" class="form-control form-control-sm text-center gauge-value-input bg-danger text-white border-0" id="CpuDurationMs_val" value="@Model.Config.CpuDurationMs" min="10" max="30000" step="10" />
                         </div>
                         <input type="hidden" id="CpuDurationMs" name="CpuDurationMs" value="@Model.Config.CpuDurationMs" />
-                        <div class="form-text">Intensive CPU computation duration (100–30,000 ms)</div>
+                        <div class="form-text">Intensive CPU computation duration (10–30,000 ms)</div>
                     </div>
                     <!-- ═══ CPU Duration — Interval ═══ -->
                     <div class="mb-3 param-interval param-section" data-param-for="EnableHighCpu">
@@ -267,17 +267,17 @@
                                 <div class="dual-range-fill" id="cpuFill"></div>
                             </div>
                             <input type="range" class="dual-range dual-range-min" id="CpuDurationMinMs_range"
-                                   min="100" max="30000" step="100" value="@Model.Config.CpuDurationMinMs" />
+                                   min="10" max="30000" step="10" value="@Model.Config.CpuDurationMinMs" />
                             <input type="range" class="dual-range dual-range-max" id="CpuDurationMaxMs_range"
-                                   min="100" max="30000" step="100" value="@Model.Config.CpuDurationMaxMs" />
+                                   min="10" max="30000" step="10" value="@Model.Config.CpuDurationMaxMs" />
                         </div>
                         <div class="d-flex justify-content-between mt-1">
-                            <span class="badge bg-danger gauge-value-badge" id="CpuDurationMinMs_val">@Model.Config.CpuDurationMinMs</span>
-                            <span class="badge bg-danger gauge-value-badge" id="CpuDurationMaxMs_val">@Model.Config.CpuDurationMaxMs</span>
+                            <input type="number" class="form-control form-control-sm text-center gauge-value-input bg-danger text-white border-0" id="CpuDurationMinMs_val" value="@Model.Config.CpuDurationMinMs" min="10" max="30000" step="10" />
+                            <input type="number" class="form-control form-control-sm text-center gauge-value-input bg-danger text-white border-0" id="CpuDurationMaxMs_val" value="@Model.Config.CpuDurationMaxMs" min="10" max="30000" step="10" />
                         </div>
                         <input type="hidden" id="CpuDurationMinMs" name="CpuDurationMinMs" value="@Model.Config.CpuDurationMinMs" />
                         <input type="hidden" id="CpuDurationMaxMs" name="CpuDurationMaxMs" value="@Model.Config.CpuDurationMaxMs" />
-                        <div class="form-text">Min–Max CPU duration (100–30,000 ms)</div>
+                        <div class="form-text">Min–Max CPU duration (10–30,000 ms)</div>
                     </div>
 
                     <!-- ═══ Memory Size — Fixed ═══ -->
@@ -291,7 +291,7 @@
                                    min="10" max="2000" step="10" value="@Model.Config.MemorySizeMb"
                                    data-target="MemorySizeMb" data-min="10" data-max="2000" />
                             <i class="fas fa-volume-up text-muted small"></i>
-                            <span class="badge bg-danger gauge-value-badge" id="MemorySizeMb_val">@Model.Config.MemorySizeMb</span>
+                            <input type="number" class="form-control form-control-sm text-center gauge-value-input bg-danger text-white border-0" id="MemorySizeMb_val" value="@Model.Config.MemorySizeMb" min="10" max="2000" step="10" />
                         </div>
                         <input type="hidden" id="MemorySizeMb" name="MemorySizeMb" value="@Model.Config.MemorySizeMb" />
                         <div class="form-text">Amount of memory to allocate (10–2,000 MB)</div>
@@ -311,8 +311,8 @@
                                    min="10" max="2000" step="10" value="@Model.Config.MemorySizeMaxMb" />
                         </div>
                         <div class="d-flex justify-content-between mt-1">
-                            <span class="badge bg-danger gauge-value-badge" id="MemorySizeMinMb_val">@Model.Config.MemorySizeMinMb</span>
-                            <span class="badge bg-danger gauge-value-badge" id="MemorySizeMaxMb_val">@Model.Config.MemorySizeMaxMb</span>
+                            <input type="number" class="form-control form-control-sm text-center gauge-value-input bg-danger text-white border-0" id="MemorySizeMinMb_val" value="@Model.Config.MemorySizeMinMb" min="10" max="2000" step="10" />
+                            <input type="number" class="form-control form-control-sm text-center gauge-value-input bg-danger text-white border-0" id="MemorySizeMaxMb_val" value="@Model.Config.MemorySizeMaxMb" min="10" max="2000" step="10" />
                         </div>
                         <input type="hidden" id="MemorySizeMinMb" name="MemorySizeMinMb" value="@Model.Config.MemorySizeMinMb" />
                         <input type="hidden" id="MemorySizeMaxMb" name="MemorySizeMaxMb" value="@Model.Config.MemorySizeMaxMb" />
@@ -327,13 +327,13 @@
                         <div class="d-flex align-items-center gap-3">
                             <i class="fas fa-volume-off text-muted small"></i>
                             <input type="range" class="form-range gauge-slider gauge-param flex-grow-1" id="LatencyMs_range"
-                                   min="100" max="60000" step="100" value="@Model.Config.LatencyMs"
-                                   data-target="LatencyMs" data-min="100" data-max="60000" />
+                                   min="10" max="60000" step="10" value="@Model.Config.LatencyMs"
+                                   data-target="LatencyMs" data-min="10" data-max="60000" />
                             <i class="fas fa-volume-up text-muted small"></i>
-                            <span class="badge bg-danger gauge-value-badge" id="LatencyMs_val">@Model.Config.LatencyMs</span>
+                            <input type="number" class="form-control form-control-sm text-center gauge-value-input bg-danger text-white border-0" id="LatencyMs_val" value="@Model.Config.LatencyMs" min="10" max="60000" step="10" />
                         </div>
                         <input type="hidden" id="LatencyMs" name="LatencyMs" value="@Model.Config.LatencyMs" />
-                        <div class="form-text">Delay added before processing (100–60,000 ms)</div>
+                        <div class="form-text">Delay added before processing (10–60,000 ms)</div>
                     </div>
                     <!-- ═══ Latency — Interval ═══ -->
                     <div class="mb-3 param-interval param-section" data-param-for="EnableHighLatency">
@@ -345,17 +345,17 @@
                                 <div class="dual-range-fill" id="latFill"></div>
                             </div>
                             <input type="range" class="dual-range dual-range-min" id="LatencyMinMs_range"
-                                   min="100" max="60000" step="100" value="@Model.Config.LatencyMinMs" />
+                                   min="10" max="60000" step="10" value="@Model.Config.LatencyMinMs" />
                             <input type="range" class="dual-range dual-range-max" id="LatencyMaxMs_range"
-                                   min="100" max="60000" step="100" value="@Model.Config.LatencyMaxMs" />
+                                   min="10" max="60000" step="10" value="@Model.Config.LatencyMaxMs" />
                         </div>
                         <div class="d-flex justify-content-between mt-1">
-                            <span class="badge bg-danger gauge-value-badge" id="LatencyMinMs_val">@Model.Config.LatencyMinMs</span>
-                            <span class="badge bg-danger gauge-value-badge" id="LatencyMaxMs_val">@Model.Config.LatencyMaxMs</span>
+                            <input type="number" class="form-control form-control-sm text-center gauge-value-input bg-danger text-white border-0" id="LatencyMinMs_val" value="@Model.Config.LatencyMinMs" min="10" max="60000" step="10" />
+                            <input type="number" class="form-control form-control-sm text-center gauge-value-input bg-danger text-white border-0" id="LatencyMaxMs_val" value="@Model.Config.LatencyMaxMs" min="10" max="60000" step="10" />
                         </div>
                         <input type="hidden" id="LatencyMinMs" name="LatencyMinMs" value="@Model.Config.LatencyMinMs" />
                         <input type="hidden" id="LatencyMaxMs" name="LatencyMaxMs" value="@Model.Config.LatencyMaxMs" />
-                        <div class="form-text">Min–Max latency (100–60,000 ms)</div>
+                        <div class="form-text">Min–Max latency (10–60,000 ms)</div>
                     </div>
 
                     <!-- ═══ Slow Response — Delay Mode (shared) ═══ -->
@@ -389,13 +389,13 @@
                         <div class="d-flex align-items-center gap-3">
                             <i class="fas fa-volume-off text-muted small"></i>
                             <input type="range" class="form-range gauge-slider gauge-param flex-grow-1" id="SlowResponseMs_range"
-                                   min="100" max="60000" step="100" value="@Model.Config.SlowResponseMs"
-                                   data-target="SlowResponseMs" data-min="100" data-max="60000" />
+                                   min="10" max="60000" step="10" value="@Model.Config.SlowResponseMs"
+                                   data-target="SlowResponseMs" data-min="10" data-max="60000" />
                             <i class="fas fa-volume-up text-muted small"></i>
-                            <span class="badge bg-danger gauge-value-badge" id="SlowResponseMs_val">@Model.Config.SlowResponseMs</span>
+                            <input type="number" class="form-control form-control-sm text-center gauge-value-input bg-danger text-white border-0" id="SlowResponseMs_val" value="@Model.Config.SlowResponseMs" min="10" max="60000" step="10" />
                         </div>
                         <input type="hidden" id="SlowResponseMs" name="SlowResponseMs" value="@Model.Config.SlowResponseMs" />
-                        <div class="form-text">Delay added after processing (100–60,000 ms)</div>
+                        <div class="form-text">Delay added after processing (10–60,000 ms)</div>
                     </div>
                     <!-- ═══ Slow Response — Interval ═══ -->
                     <div class="mb-3 param-interval param-section" data-param-for="EnableSlowResponse">
@@ -407,17 +407,17 @@
                                 <div class="dual-range-fill" id="slowFill"></div>
                             </div>
                             <input type="range" class="dual-range dual-range-min" id="SlowResponseMinMs_range"
-                                   min="100" max="60000" step="100" value="@Model.Config.SlowResponseMinMs" />
+                                   min="10" max="60000" step="10" value="@Model.Config.SlowResponseMinMs" />
                             <input type="range" class="dual-range dual-range-max" id="SlowResponseMaxMs_range"
-                                   min="100" max="60000" step="100" value="@Model.Config.SlowResponseMaxMs" />
+                                   min="10" max="60000" step="10" value="@Model.Config.SlowResponseMaxMs" />
                         </div>
                         <div class="d-flex justify-content-between mt-1">
-                            <span class="badge bg-danger gauge-value-badge" id="SlowResponseMinMs_val">@Model.Config.SlowResponseMinMs</span>
-                            <span class="badge bg-danger gauge-value-badge" id="SlowResponseMaxMs_val">@Model.Config.SlowResponseMaxMs</span>
+                            <input type="number" class="form-control form-control-sm text-center gauge-value-input bg-danger text-white border-0" id="SlowResponseMinMs_val" value="@Model.Config.SlowResponseMinMs" min="10" max="60000" step="10" />
+                            <input type="number" class="form-control form-control-sm text-center gauge-value-input bg-danger text-white border-0" id="SlowResponseMaxMs_val" value="@Model.Config.SlowResponseMaxMs" min="10" max="60000" step="10" />
                         </div>
                         <input type="hidden" id="SlowResponseMinMs" name="SlowResponseMinMs" value="@Model.Config.SlowResponseMinMs" />
                         <input type="hidden" id="SlowResponseMaxMs" name="SlowResponseMaxMs" value="@Model.Config.SlowResponseMaxMs" />
-                        <div class="form-text">Min–Max slow response (100–60,000 ms)</div>
+                        <div class="form-text">Min–Max slow response (10–60,000 ms)</div>
                     </div>
 
                     <!-- ═══ Startup Duration (always dual slider) ═══ -->
@@ -430,17 +430,17 @@
                                 <div class="dual-range-fill" id="startupFill"></div>
                             </div>
                             <input type="range" class="dual-range dual-range-min" id="StartupDurationMinMs_range"
-                                   min="1000" max="300000" step="1000" value="@Model.Config.StartupDurationMinMs" />
+                                   min="500" max="300000" step="500" value="@Model.Config.StartupDurationMinMs" />
                             <input type="range" class="dual-range dual-range-max" id="StartupDurationMaxMs_range"
-                                   min="1000" max="300000" step="1000" value="@Model.Config.StartupDurationMaxMs" />
+                                   min="500" max="300000" step="500" value="@Model.Config.StartupDurationMaxMs" />
                         </div>
                         <div class="d-flex justify-content-between mt-1">
-                            <span class="badge bg-danger gauge-value-badge" id="StartupDurationMinMs_val">@Model.Config.StartupDurationMinMs</span>
-                            <span class="badge bg-danger gauge-value-badge" id="StartupDurationMaxMs_val">@Model.Config.StartupDurationMaxMs</span>
+                            <input type="number" class="form-control form-control-sm text-center gauge-value-input bg-danger text-white border-0" id="StartupDurationMinMs_val" value="@Model.Config.StartupDurationMinMs" min="500" max="300000" step="500" />
+                            <input type="number" class="form-control form-control-sm text-center gauge-value-input bg-danger text-white border-0" id="StartupDurationMaxMs_val" value="@Model.Config.StartupDurationMaxMs" min="500" max="300000" step="500" />
                         </div>
                         <input type="hidden" id="StartupDurationMinMs" name="StartupDurationMinMs" value="@Model.Config.StartupDurationMinMs" />
                         <input type="hidden" id="StartupDurationMaxMs" name="StartupDurationMaxMs" value="@Model.Config.StartupDurationMaxMs" />
-                        <div class="form-text">Min–Max startup initialization delay (1,000–300,000 ms)</div>
+                        <div class="form-text">Min–Max startup initialization delay (500–300,000 ms)</div>
                     </div>
                 </div>
             </div>
@@ -562,7 +562,7 @@
                 if (defaults[targetId] !== undefined) {
                     range.value = defaults[targetId];
                     document.getElementById(targetId).value = defaults[targetId];
-                    document.getElementById(targetId + '_val').textContent = fmt(defaults[targetId]);
+                    document.getElementById(targetId + '_val').value = defaults[targetId];
                 }
             });
             // Reset dual-range sliders
@@ -573,7 +573,7 @@
                 if (range && hidden) {
                     range.value = defaults[key];
                     hidden.value = defaults[key];
-                    if (badge) badge.textContent = fmt(defaults[key]);
+                    if (badge) badge.value = defaults[key];
                 }
             });
             // Reset SlowResponseMode to TaskDelay (default)
@@ -584,11 +584,11 @@
             if (startupDual) startupDual.updateFill();
             // Reset global gauges
             globalGauge.value = 50;
-            globalBadge.textContent = '50%';
+            globalBadge.value = 50;
             document.getElementById('globalGaugeMin').value = 20;
             document.getElementById('globalGaugeMax').value = 80;
-            document.getElementById('globalGaugeMinValue').textContent = '20%';
-            document.getElementById('globalGaugeMaxValue').textContent = '80%';
+            document.getElementById('globalGaugeMinValue').value = 20;
+            document.getElementById('globalGaugeMaxValue').value = 80;
             var gFill = document.getElementById('globalIntervalFill');
             gFill.style.left = '20%';
             gFill.style.width = '60%';
@@ -601,7 +601,17 @@
             var badge = document.getElementById(targetId + '_val');
             range.addEventListener('input', function () {
                 hidden.value = range.value;
-                badge.textContent = parseInt(range.value).toLocaleString('fr-FR');
+                badge.value = range.value;
+            });
+            badge.addEventListener('change', function () {
+                var val = parseInt(badge.value) || parseInt(range.min);
+                var min = parseInt(range.min);
+                var max = parseInt(range.max);
+                var step = parseInt(range.step) || 1;
+                val = Math.max(min, Math.min(max, Math.round(val / step) * step));
+                badge.value = val;
+                range.value = val;
+                hidden.value = val;
             });
         });
 
@@ -612,7 +622,13 @@
             var pctBadge = document.getElementById('Percentage_val');
             pctRange.addEventListener('input', function () {
                 pctHidden.value = pctRange.value;
-                pctBadge.textContent = pctRange.value + '%';
+                pctBadge.value = pctRange.value;
+            });
+            pctBadge.addEventListener('change', function () {
+                var val = Math.max(1, Math.min(100, parseInt(pctBadge.value) || 1));
+                pctBadge.value = val;
+                pctRange.value = val;
+                pctHidden.value = val;
             });
         }
 
@@ -621,7 +637,7 @@
         var globalBadge = document.getElementById('globalGaugeValue');
         globalGauge.addEventListener('input', function () {
             var pct = parseInt(globalGauge.value) / 100;
-            globalBadge.textContent = globalGauge.value + '%';
+            globalBadge.value = globalGauge.value;
             document.querySelectorAll('.gauge-param').forEach(function (range) {
                 var min = parseInt(range.dataset.min);
                 var max = parseInt(range.dataset.max);
@@ -631,12 +647,18 @@
                 range.value = val;
                 var targetId = range.dataset.target;
                 document.getElementById(targetId).value = val;
-                document.getElementById(targetId + '_val').textContent = val.toLocaleString('fr-FR');
+                document.getElementById(targetId + '_val').value = val;
             });
+        });
+        globalBadge.addEventListener('change', function () {
+            var val = Math.max(0, Math.min(100, parseInt(globalBadge.value) || 0));
+            globalBadge.value = val;
+            globalGauge.value = val;
+            globalGauge.dispatchEvent(new Event('input'));
         });
 
         // ── Generic dual-range initializer ──
-        function fmt(v) { return parseInt(v).toLocaleString('fr-FR'); }
+        function fmt(v) { return parseInt(v); }
 
         function initDualRange(minId, maxId, fillId) {
             var minRange = document.getElementById(minId + '_range');
@@ -663,14 +685,30 @@
                 if (parseInt(minRange.value) > parseInt(maxRange.value))
                     minRange.value = maxRange.value;
                 minHidden.value = minRange.value;
-                minBadge.textContent = fmt(minRange.value);
+                minBadge.value = fmt(minRange.value);
                 updateFill();
             });
             maxRange.addEventListener('input', function () {
                 if (parseInt(maxRange.value) < parseInt(minRange.value))
                     maxRange.value = minRange.value;
                 maxHidden.value = maxRange.value;
-                maxBadge.textContent = fmt(maxRange.value);
+                maxBadge.value = fmt(maxRange.value);
+                updateFill();
+            });
+            minBadge.addEventListener('change', function () {
+                var val = parseInt(minBadge.value) || rangeMin;
+                val = Math.max(rangeMin, Math.min(parseInt(maxRange.value), Math.round(val / step) * step));
+                minBadge.value = val;
+                minRange.value = val;
+                minHidden.value = val;
+                updateFill();
+            });
+            maxBadge.addEventListener('change', function () {
+                var val = parseInt(maxBadge.value) || rangeMax;
+                val = Math.max(parseInt(minRange.value), Math.min(rangeMax, Math.round(val / step) * step));
+                maxBadge.value = val;
+                maxRange.value = val;
+                maxHidden.value = val;
                 updateFill();
             });
             updateFill();
@@ -709,8 +747,8 @@
             function applyGlobal() {
                 var pctMin = parseInt(gMinRange.value) / 100;
                 var pctMax = parseInt(gMaxRange.value) / 100;
-                gMinBadge.textContent = gMinRange.value + '%';
-                gMaxBadge.textContent = gMaxRange.value + '%';
+                gMinBadge.value = gMinRange.value;
+                gMaxBadge.value = gMaxRange.value;
                 updateGFill();
 
                 paramDuals.forEach(function (d) {
@@ -722,8 +760,8 @@
                     d.maxRange.value = maxVal;
                     d.minHidden.value = minVal;
                     d.maxHidden.value = maxVal;
-                    d.minBadge.textContent = fmt(minVal);
-                    d.maxBadge.textContent = fmt(maxVal);
+                    d.minBadge.value = fmt(minVal);
+                    d.maxBadge.value = fmt(maxVal);
                     d.updateFill();
                 });
             }
@@ -736,6 +774,18 @@
             gMaxRange.addEventListener('input', function () {
                 if (parseInt(gMaxRange.value) < parseInt(gMinRange.value))
                     gMaxRange.value = gMinRange.value;
+                applyGlobal();
+            });
+            gMinBadge.addEventListener('change', function () {
+                var val = Math.max(0, Math.min(parseInt(gMaxRange.value), parseInt(gMinBadge.value) || 0));
+                gMinBadge.value = val;
+                gMinRange.value = val;
+                applyGlobal();
+            });
+            gMaxBadge.addEventListener('change', function () {
+                var val = Math.max(parseInt(gMinRange.value), Math.min(100, parseInt(gMaxBadge.value) || 100));
+                gMaxBadge.value = val;
+                gMaxRange.value = val;
                 applyGlobal();
             });
             updateGFill();

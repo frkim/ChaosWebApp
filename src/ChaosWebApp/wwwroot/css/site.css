@@ -348,6 +348,23 @@ body {
   text-align: center;
   font-size: .8rem;
 }
+.gauge-value-input {
+  width: 6rem;
+  font-size: .8rem;
+  padding: .2rem .35rem;
+  border-radius: .375rem;
+  font-weight: 600;
+  -moz-appearance: textfield;
+}
+.gauge-value-input::-webkit-outer-spin-button,
+.gauge-value-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.gauge-value-input:focus {
+  box-shadow: 0 0 0 .2rem rgba(255,255,255,.35);
+  outline: none;
+}
 
 /* Primary-colored dual-range (Global Intensity interval) */
 .dual-range-fill-primary {
