@@ -23,6 +23,7 @@ public class ChaosService : IChaosService
     private DateTime _lastChaosTime = DateTime.MinValue;
     private readonly ConfigurationClient? _configClient;
     private readonly ILogger<ChaosService> _logger;
+    private readonly object _fileLock = new();
 
     public ChaosService(ILogger<ChaosService> logger, ConfigurationClient? configClient = null)
     {
@@ -150,7 +151,11 @@ public class ChaosService : IChaosService
         {
             if (!File.Exists(LocalConfigPath)) return;
 
-            var json = File.ReadAllText(LocalConfigPath);
+            string json;
+            lock (_fileLock)
+            {
+                json = File.ReadAllText(LocalConfigPath);
+            }
             var loaded = JsonSerializer.Deserialize<ChaosConfig>(json);
             if (loaded is not null)
             {
@@ -169,7 +174,10 @@ public class ChaosService : IChaosService
         try
         {
             var json = JsonSerializer.Serialize(config, new JsonSerializerOptions { WriteIndented = true });
-            File.WriteAllText(LocalConfigPath, json);
+            lock (_fileLock)
+            {
+                File.WriteAllText(LocalConfigPath, json);
+            }
             _logger.LogInformation("Chaos config saved to local file {Path}.", LocalConfigPath);
         }
         catch (Exception ex)
