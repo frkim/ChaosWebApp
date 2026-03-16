@@ -467,6 +467,18 @@
             new bootstrap.Tooltip(tooltipTriggerEl);
         });
 
+        // ── Textbox UX: select all on focus, Escape to blur ──
+        document.querySelectorAll('input[type="number"]').forEach(function (input) {
+            input.addEventListener('focus', function () {
+                input.select();
+            });
+            input.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape') {
+                    input.blur();
+                }
+            });
+        });
+
         // ── Select All / None / Random ──
         document.getElementById('selectAll').addEventListener('click', function () {
             document.querySelectorAll('.chaos-type-card input[type="checkbox"]').forEach(cb => { cb.checked = true; });
